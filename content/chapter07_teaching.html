@@ -1,0 +1,405 @@
+<h4>7-1 重複結構 (迴圈) 概論</h4>
+<p>重複結構，也稱為迴圈 (Loops)，允許程式碼區塊重複執行多次。這對於處理需要重複進行的任務非常有用，例如處理陣列中的每個元素、讀取使用者輸入直到有效、或執行模擬直到滿足特定條件。</p>
+<p>C語言主要提供三種迴圈結構：</p>
+<ul>
+    <li><strong><code>for</code> 迴圈：</strong> 通常用於已知重複次數的情況。</li>
+    <li><strong><code>while</code> 迴圈：</strong> 當重複條件在迴圈開始前判斷，適用於未知重複次數但有明確終止條件的情況。</li>
+    <li><strong><code>do...while</code> 迴圈：</strong> 與 <code>while</code> 迴圈類似，但條件是在迴圈執行至少一次後才判斷。</li>
+</ul>
+<p>此外，還有兩個與迴圈控制相關的敘述：</p>
+<ul>
+    <li><strong><code>break</code> 敘述：</strong> 除了用於 <code>switch</code> 外，也可用於立即跳出所在的迴圈結構。</li>
+    <li><strong><code>continue</code> 敘述：</strong> 跳過目前迴圈迭代中剩餘的程式碼，直接開始下一次迭代。</li>
+</ul>
+
+<h4>7-2 <code>for</code> 迴圈</h4>
+<p><code>for</code> 迴圈非常適合在已知迴圈執行次數或有明確計數器變數的情況下使用。它將迴圈的初始化、條件判斷和更新操作集中在一行，結構清晰。</p>
+<p><strong>語法：</strong></p>
+<pre><code class="language-c">
+for (初始化運算式; 條件運算式; 更新運算式) {
+    // 迴圈主體：如果條件運算式為真，則執行這裡的敘述
+}
+</code></pre>
+<p><strong><code>for</code> 迴圈的執行流程：</strong></p>
+<ol>
+    <li><strong>初始化運算式 (Initialization)：</strong> 首先執行，且只執行一次。通常用於宣告和初始化迴圈計數器變數。此部分可宣告C99標準的區塊範圍變數。</li>
+    <li><strong>條件運算式 (Condition)：</strong> 在每次迭代開始前進行評估。
+        <ul>
+            <li>如果條件為真 (非零值)，則執行迴圈主體。</li>
+            <li>如果條件為偽 (零值)，則迴圈終止，程式跳到迴圈之後的敘述。</li>
+        </ul>
+        如果省略此條件，則視為永遠為真，形成無限迴圈，除非迴圈內部有其他跳出機制 (如 <code>break</code>)。
+    </li>
+    <li><strong>迴圈主體 (Loop Body)：</strong> 如果條件為真，則執行大括號 <code>{}</code> 內的程式碼。</li>
+    <li><strong>更新運算式 (Update/Increment/Decrement)：</strong> 在每次迴圈主體執行完畢後執行。通常用於修改計數器變數的值，使其朝向終止條件。</li>
+    <li>然後回到步驟 2 (條件運算式判斷)，重複此過程。</li>
+</ol>
+<p><strong>流程圖：</strong></p>
+<p><img src="https://i.imgur.com/U0g9z3E.png" alt="for loop flowchart" style="max-width: 350px;"></p>
+<p><em>(流程圖說明：初始化 -> 條件判斷 -> (若真) -> 迴圈主體 -> 更新 -> 回到條件判斷 -> (若偽) -> 結束迴圈)</em></p>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    int i; // C89/90 風格，變數在區塊開頭宣告
+
+    // 範例 1: 印出 0 到 4
+    printf("範例 1 (0 to 4):\n");
+    for (i = 0; i < 5; i++) { // 初始化 i=0; 條件 i<5; 更新 i++
+        printf("i = %d\n", i);
+    }
+
+    // 範例 2: 印出 10 到 1 (遞減)
+    printf("\n範例 2 (10 down to 1):\n");
+    for (int j = 10; j > 0; j--) { // C99 標準：可以在 for 初始化中宣告變數 j
+                                   // 變數 j 的作用域僅限於此 for 迴圈
+        printf("j = %d\n", j);
+    }
+    // printf("%d", j); // 這裡會報錯，因為 j 的作用域已結束
+
+    // 範例 3: 計算 1 到 100 的總和
+    int sum = 0;
+    for (int k = 1; k <= 100; k++) {
+        sum += k; // sum = sum + k;
+    }
+    printf("\n範例 3: 1 到 100 的總和 = %d\n", sum);
+
+    // 範例 4: for 迴圈的各部分都可以省略，但分號必須保留
+    // 無限迴圈 (通常需要 break 來跳出)
+    /*
+    int count = 0;
+    for (;;) { // 初始化、條件、更新都省略 -> 無限迴圈
+        printf("無限迴圈中... count = %d\n", count++);
+        if (count > 5) {
+            break; // 使用 break 跳出無限迴圈
+        }
+    }
+    */
+
+    // 範例 5: 多個初始化或更新運算式，用逗號隔開
+    printf("\n範例 5 (多重初始化/更新):\n");
+    for (int x = 0, y = 5; x <= 5; x++, y--) {
+        printf("x = %d, y = %d\n", x, y);
+    }
+
+    return 0;
+}
+</code></pre>
+<p><strong><code>for</code> 迴圈的彈性：</strong></p>
+<ul>
+    <li>初始化、條件和更新運算式都是可選的。但即使省略，它們位置上的分號 <code>;</code> 仍必須保留。</li>
+    <li><code>for (;;)</code> 是一個常見的無限迴圈寫法。</li>
+    <li>初始化和更新部分可以包含多個以逗號 <code>,</code> 分隔的運算式。</li>
+</ul>
+
+<h4>7-3 <code>while</code> 迴圈</h4>
+<p><code>while</code> 迴圈在每次迭代開始前檢查條件。如果條件為真，則執行迴圈主體；否則，迴圈終止。它適用於重複次數未知，但有明確終止條件的情況。</p>
+<p><strong>語法：</strong></p>
+<pre><code class="language-c">
+while (條件運算式) {
+    // 迴圈主體：如果條件運算式為真，則執行這裡的敘述
+    // 在迴圈主體內通常需要有改變條件運算式結果的敘述，以避免無限迴圈
+}
+</code></pre>
+<p><strong><code>while</code> 迴圈的執行流程：</strong></p>
+<ol>
+    <li><strong>條件運算式 (Condition)：</strong> 在每次迭代開始前 (包括第一次) 進行評估。</li>
+    <li>如果條件為真 (非零值)，則執行迴圈主體。然後回到步驟 1。</li>
+    <li>如果條件為偽 (零值)，則迴圈終止，程式跳到迴圈之後的敘述。如果第一次條件就為偽，則迴圈主體一次也不會執行。</li>
+</ol>
+<p><strong>流程圖：</strong></p>
+<p><img src="https://i.imgur.com/s9FkHqS.png" alt="while loop flowchart" style="max-width: 250px;"></p>
+<p><em>(流程圖說明：條件判斷 -> (若真) -> 迴圈主體 -> 回到條件判斷 -> (若偽) -> 結束迴圈)</em></p>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    // 範例 1: 使用 while 印出 0 到 4 (類似 for 迴圈)
+    printf("範例 1 (0 to 4 using while):\n");
+    int i = 0;       // 1. 初始化
+    while (i < 5) {  // 2. 條件判斷
+        printf("i = %d\n", i);
+        i++;         // 3. 更新 (在迴圈主體內)
+    }
+
+    // 範例 2: 計算使用者輸入數字的各位數之和
+    int num, digit, sum_of_digits = 0;
+    printf("\n範例 2: 請輸入一個正整數: ");
+    scanf("%d", &num);
+
+    if (num < 0) {
+        printf("請輸入正整數。\n");
+    } else {
+        int temp_num = num; // 保留原數字
+        while (temp_num > 0) {
+            digit = temp_num % 10; // 取出個位數
+            sum_of_digits += digit;
+            temp_num /= 10;      // 去掉個位數
+        }
+        printf("%d 的各位數之和為: %d\n", num, sum_of_digits);
+    }
+
+    // 範例 3: 等待使用者輸入特定字元才結束
+    char ch;
+    printf("\n範例 3: 請重複輸入字元，輸入 'q' 結束:\n");
+    // 清除之前 scanf 可能留下的換行符
+    while(getchar() != '\n');
+
+    while ((ch = getchar()) != 'q' && ch != EOF && ch != '\n') {
+        printf("您輸入了: %c\n", ch);
+        // 如果是行緩衝，這裡可能需要再次清除換行符
+        // 但由於我們在條件中檢查了 '\n'，所以可以簡化
+        if (ch != '\n') { // 避免在讀到換行時又去讀一次
+             while(getchar() != '\n'); // 清除到行尾
+        }
+    }
+    printf("輸入 'q'，迴圈結束。\n");
+
+    return 0;
+}
+</code></pre>
+
+<h4>7-4 <code>do...while</code> 迴圈</h4>
+<p><code>do...while</code> 迴圈與 <code>while</code> 迴圈類似，主要區別在於它先執行一次迴圈主體，然後才進行條件判斷。因此，<code>do...while</code> 迴圈的迴圈主體至少會執行一次，即使條件一開始就為偽。</p>
+<p><strong>語法：</strong></p>
+<pre><code class="language-c">
+do {
+    // 迴圈主體：至少會執行一次
+    // 在迴圈主體內通常需要有改變條件運算式結果的敘述
+} while (條件運算式); // 注意這裡的分號是必需的
+</code></pre>
+<p><strong><code>do...while</code> 迴圈的執行流程：</strong></p>
+<ol>
+    <li><strong>迴圈主體 (Loop Body)：</strong> 首先執行一次迴圈主體。</li>
+    <li><strong>條件運算式 (Condition)：</strong> 在迴圈主體執行完畢後進行評估。</li>
+    <li>如果條件為真 (非零值)，則回到步驟 1，再次執行迴圈主體。</li>
+    <li>如果條件為偽 (零值)，則迴圈終止，程式跳到迴圈之後的敘述。</li>
+</ol>
+<p><strong>流程圖：</strong></p>
+<p><img src="https://i.imgur.com/qK8Ld8E.png" alt="do-while loop flowchart" style="max-width: 250px;"></p>
+<p><em>(流程圖說明：迴圈主體 -> 條件判斷 -> (若真) -> 回到迴圈主體 -> (若偽) -> 結束迴圈)</em></p>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    // 範例 1: 即使條件一開始就為偽，迴圈主體也執行一次
+    printf("範例 1 (do...while):\n");
+    int count = 5;
+    do {
+        printf("count = %d (在 do...while 內部)\n", count);
+        count++;
+    } while (count < 5); // 條件 5 < 5 為偽，但迴圈已執行一次 (count變為6)
+    printf("迴圈結束後 count = %d\n", count);
+
+
+    // 範例 2: 選單驅動程式，至少顯示一次選單
+    int choice;
+    printf("\n範例 2 (選單):\n");
+    do {
+        printf("\n--- 主選單 ---\n");
+        printf("1. 選項 A\n");
+        printf("2. 選項 B\n");
+        printf("3. 結束程式\n");
+        printf("請輸入您的選擇 (1-3): ");
+
+        // 嘗試讀取整數，並處理可能的輸入錯誤
+        if (scanf("%d", &choice) != 1) {
+            printf("輸入無效，請輸入數字。\n");
+            // 清除非法輸入
+            while(getchar() != '\n');
+            choice = 0; // 給定一個不會立即結束迴圈但也不是有效選項的值
+            continue;   // 跳過 switch，重新顯示選單
+        }
+
+        switch (choice) {
+            case 1:
+                printf("您選擇了 選項 A。\n");
+                break;
+            case 2:
+                printf("您選擇了 選項 B。\n");
+                break;
+            case 3:
+                printf("感謝使用，程式即將結束。\n");
+                break;
+            default:
+                printf("無效的選擇，請重新輸入。\n");
+        }
+        // 清除 scanf 可能留下的換行符，為下一次迴圈的 scanf 做準備
+        // 如果 choice 是 3 (結束)，則不需要清除，但清除也無害
+        while(getchar() != '\n');
+
+    } while (choice != 3); // 當選擇不為3時，重複迴圈
+
+    return 0;
+}
+</code></pre>
+<p><strong>選擇 <code>while</code> 還是 <code>do...while</code>：</strong></p>
+<ul>
+    <li>如果迴圈主體可能一次都不需要執行 (取決於初始條件)，則使用 <code>while</code>。</li>
+    <li>如果迴圈主體必須至少執行一次 (例如，顯示選單、獲取使用者首次輸入)，則使用 <code>do...while</code> 更合適。</li>
+</ul>
+
+<h4>7-5 <code>break</code> 與 <code>continue</code> 敘述</h4>
+<p><strong><code>break</code> 敘述：</strong></p>
+<ul>
+    <li>用於立即終止其所在的<strong>最內層</strong>迴圈 (<code>for</code>, <code>while</code>, <code>do...while</code>) 或 <code>switch</code> 敘述的執行。</li>
+    <li>程式流程會跳到該迴圈或 <code>switch</code> 結構之後的第一條敘述。</li>
+</ul>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    // 範例: 在 for 迴圈中使用 break
+    printf("範例 (break in for loop):\n");
+    for (int i = 1; i <= 10; i++) {
+        if (i == 5) {
+            printf("i 等於 5，觸發 break！\n");
+            break; // 當 i 等於 5 時，跳出 for 迴圈
+        }
+        printf("i = %d\n", i);
+    }
+    printf("for 迴圈結束。\n");
+
+    // 範例: 在 while 迴圈中搜尋數字
+    int data[] = {10, 25, 7, 42, 18, 30};
+    int search_key = 42;
+    int found_index = -1;
+    int k = 0;
+    int data_size = sizeof(data) / sizeof(data[0]);
+
+    printf("\n範例 (break in while for search):\n");
+    while (k < data_size) {
+        if (data[k] == search_key) {
+            found_index = k;
+            printf("找到 %d 在索引 %d 處。\n", search_key, found_index);
+            break; // 找到即跳出
+        }
+        k++;
+    }
+    if (found_index == -1) {
+        printf("未找到 %d。\n", search_key);
+    }
+
+    return 0;
+}
+</code></pre>
+<p><strong><code>continue</code> 敘述：</strong></p>
+<ul>
+    <li>用於跳過目前迴圈迭代中 <code>continue</code> 敘述之後的剩餘程式碼，並立即開始下一次迭代。</li>
+    <li>在 <code>for</code> 迴圈中，執行 <code>continue</code> 後，會先執行更新運算式，然後再進行條件判斷。</li>
+    <li>在 <code>while</code> 和 <code>do...while</code> 迴圈中，執行 <code>continue</code> 後，會直接跳到條件判斷部分。</li>
+</ul>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    // 範例: 在 for 迴圈中使用 continue，只印出奇數
+    printf("範例 (continue in for loop - print odd numbers):\n");
+    for (int i = 1; i <= 10; i++) {
+        if (i % 2 == 0) { // 如果 i 是偶數
+            continue;     // 跳過本次迭代的 printf，直接進入下一次迭代 (i++ 和條件判斷)
+        }
+        printf("i = %d (奇數)\n", i);
+    }
+
+    // 範例: 在 while 迴圈中處理輸入，忽略負數
+    int num, sum_positive = 0, count_inputs = 0;
+    printf("\n範例 (continue in while - sum positive numbers):\n");
+    printf("請輸入5個數字 (負數將被忽略):\n");
+
+    while(count_inputs < 5) {
+        printf("請輸入第 %d 個數字: ", count_inputs + 1);
+        if (scanf("%d", &num) != 1) {
+            printf("無效輸入，請重新輸入數字。\n");
+            while(getchar() != '\n'); // 清除錯誤輸入
+            continue; // 跳過本次迭代
+        }
+        while(getchar() != '\n'); // 清除換行符
+
+        if (num < 0) {
+            printf("輸入的是負數 %d，將被忽略。\n", num);
+            count_inputs++; // 仍然算一次輸入機會
+            continue; // 跳過加總，處理下一個輸入
+        }
+        sum_positive += num;
+        count_inputs++;
+    }
+    printf("輸入的正數總和為: %d\n", sum_positive);
+
+    return 0;
+}
+</code></pre>
+
+<h4>7-6 巢狀迴圈 (Nested Loops)</h4>
+<p>一個迴圈結構內部可以包含另一個迴圈結構，形成巢狀迴圈。外層迴圈每執行一次，內層迴圈會完整地執行其所有迭代。</p>
+<p>巢狀迴圈常用於處理二維資料結構 (如矩陣)、產生各種圖案等。</p>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    // 範例 1: 印出九九乘法表
+    printf("範例 1: 九九乘法表\n");
+    for (int i = 1; i <= 9; i++) {      // 外層迴圈控制被乘數
+        for (int j = 1; j <= i; j++) {  // 內層迴圈控制乘數 (j <= i 使其不重複，如 2*1 不再印 1*2)
+                                        // 如果要完整表格，j <= 9
+            printf("%d * %d = %2d   ", j, i, i * j); // %2d 讓輸出對齊
+        }
+        printf("\n"); // 每行結束後換行
+    }
+
+    // 範例 2: 印出星號金字塔
+    printf("\n範例 2: 星號金字塔\n");
+    int rows = 5;
+    for (int i = 1; i <= rows; i++) { // 控制行數
+        // 印出空格
+        for (int space = 1; space <= rows - i; space++) {
+            printf(" ");
+        }
+        // 印出星號
+        for (int star = 1; star <= (2 * i - 1); star++) {
+            printf("*");
+        }
+        printf("\n"); // 換行
+    }
+
+    // 範例 3: 巢狀迴圈中的 break 和 continue
+    // break 只會跳出最內層迴圈
+    // continue 也只會影響最內層迴圈
+    printf("\n範例 3: 巢狀迴圈中的 break\n");
+    for (int i = 1; i <= 3; i++) {
+        printf("外層迴圈: i = %d\n", i);
+        for (int j = 1; j <= 3; j++) {
+            if (i == 2 && j == 2) {
+                printf("  內層迴圈: i=%d, j=%d, 觸發 break (跳出內層)\n", i, j);
+                break; // 只跳出內層 for (j) 迴圈
+            }
+            printf("  內層迴圈: j = %d\n", j);
+        }
+        printf("外層迴圈在內層結束後繼續。\n\n");
+    }
+
+
+    printf("\n範例 4: 巢狀迴圈中的 continue\n");
+    for (int i = 1; i <= 2; i++) {
+        printf("外層迴圈: i = %d\n", i);
+        for (int j = 1; j <= 3; j++) {
+            if (j == 2) {
+                printf("  內層迴圈: i=%d, j=%d, 觸發 continue (跳過內層本次迭代)\n", i, j);
+                continue; // 跳過內層 for (j) 迴圈的本次迭代
+            }
+            printf("  內層迴圈: j = %d\n", j);
+        }
+        printf("外層迴圈在內層結束後繼續。\n\n");
+    }
+
+    return 0;
+}
+</code></pre>
+<p><strong>使用巢狀迴圈時的注意事項：</strong></p>
+<ul>
+    <li>確保內外層迴圈的計數器變數名稱不同，以避免衝突。</li>
+    <li>巢狀迴圈的複雜度較高，迭代次數是外層次數乘以內層次數，應注意效率問題。</li>
+    <li><code>break</code> 和 <code>continue</code> 只對其所在的<strong>最內層</strong>迴圈起作用。如果想跳出多層迴圈，需要使用更複雜的機制，如設定旗標變數或使用 <code>goto</code> (但不建議濫用 <code>goto</code>)。</li>
+</ul>
+
+<p><em>(此處省略了Word文檔中可能存在的练习题指引，因为练习题会在另一部分单独处理)</em></p>

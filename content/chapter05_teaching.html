@@ -1,0 +1,456 @@
+<h4>5-1 資料輸入輸出概論</h4>
+<p>在C語言中，資料的輸入 (Input) 與輸出 (Output) 主要透過標準函式庫 <code>&lt;stdio.h&gt;</code> (Standard Input/Output Header) 中提供的函式來完成。這個標頭檔定義了用於處理檔案和進行標準輸入輸出的各種函式、巨集和型態。</p>
+<p>最常用的輸入輸出函式有：</p>
+<ul>
+    <li><strong><code>printf()</code>：</strong> 格式化輸出函式，將資料輸出到標準輸出裝置 (通常是螢幕)。</li>
+    <li><strong><code>scanf()</code>：</strong> 格式化輸入函式，從標準輸入裝置 (通常是鍵盤) 讀取資料。</li>
+    <li><strong><code>getchar()</code>：</strong> 從標準輸入讀取一個字元。</li>
+    <li><strong><code>putchar()</code>：</strong> 將一個字元輸出到標準輸出。</li>
+    <li>其他還有檔案操作相關的函式，如 <code>fopen()</code>, <code>fclose()</code>, <code>fprintf()</code>, <code>fscanf()</code>, <code>fgets()</code>, <code>fputs()</code> 等，這些通常在檔案處理的章節中詳細介紹。</li>
+</ul>
+<p><strong>標準資料流 (Standard Streams)：</strong></p>
+<p>當一個C程式開始執行時，作業系統通常會自動開啟三個標準資料流：</p>
+<ul>
+    <li><strong><code>stdin</code> (Standard Input)：</strong> 標準輸入流，預設連接到鍵盤。<code>scanf()</code>, <code>getchar()</code> 從此讀取。</li>
+    <li><strong><code>stdout</code> (Standard Output)：</strong> 標準輸出流，預設連接到螢幕。<code>printf()</code>, <code>putchar()</code> 輸出到此。</li>
+    <li><strong><code>stderr</code> (Standard Error)：</strong> 標準錯誤流，預設也連接到螢幕，用於輸出錯誤訊息。</li>
+</ul>
+
+<h4>5-2 字元輸入輸出：<code>getchar()</code> 與 <code>putchar()</code></h4>
+<p><strong><code>int getchar(void)</code>：</strong></p>
+<ul>
+    <li>從標準輸入 (<code>stdin</code>) 讀取下一個字元。</li>
+    <li>以 <code>unsigned char</code> 型態讀入，然後轉換為 <code>int</code> 型態回傳。</li>
+    <li>如果讀取成功，回傳讀取到的字元的ASCII碼 (整數值)。</li>
+    <li>如果到達檔案結尾 (End-Of-File, EOF) 或發生讀取錯誤，回傳 <code>EOF</code> (一個在 <code>&lt;stdio.h&gt;</code> 中定義的特殊整數值，通常是 -1)。</li>
+</ul>
+<p><strong><code>int putchar(int char)</code>：</strong></p>
+<ul>
+    <li>將參數 <code>char</code> (一個整數，通常是字元的ASCII碼) 寫入標準輸出 (<code>stdout</code>)。</li>
+    <li>如果寫入成功，回傳被寫出的字元 (以 <code>int</code> 型態)。</li>
+    <li>如果發生寫入錯誤，回傳 <code>EOF</code>。</li>
+</ul>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    int ch; // 使用 int 來接收 getchar 的回傳值，以正確判斷 EOF
+
+    printf("請輸入一個字元: ");
+    ch = getchar(); // 讀取一個字元
+
+    printf("您輸入的字元是: ");
+    putchar(ch);   // 輸出該字元
+    putchar('\n'); // 輸出換行符
+
+    // 示例：讀取一行文字直到換行符或EOF
+    printf("請輸入一行文字 (按Enter結束):\n");
+    // 清除先前 getchar 可能遺留的換行符
+    // while(getchar() != '\n'); // 這種清除方式有時不可靠或會多吃字元
+
+    // 較好的清除輸入緩衝區方法是讀取直到換行符或EOF
+    int temp_char;
+    // 如果 ch 已經是換行符，可能不需要再次清除。
+    // 但為了安全，可以先讀取並捨棄到行尾的字元
+    if (ch != '\n' && ch != EOF) { // 如果第一次 getchar 不是換行
+        while ((temp_char = getchar()) != '\n' && temp_char != EOF);
+    }
+
+
+    printf("請再次輸入一行文字，將逐字元輸出:\n");
+    while ((ch = getchar()) != '\n' && ch != EOF) {
+        putchar(ch);
+    }
+    putchar('\n');
+
+    return 0;
+}
+</code></pre>
+<p><strong>注意輸入緩衝區：</strong> 當使用 <code>getchar()</code> 或 <code>scanf()</code> 時，輸入通常是行緩衝的。這表示您輸入的字元會先被存放在一個緩衝區，直到您按下 Enter 鍵，緩衝區中的內容才會被程式讀取。Enter 鍵本身也會產生一個換行字元 <code>\n</code>，它也會被存入緩衝區。</p>
+
+<h4>5-3 格式化輸出：<code>printf()</code></h4>
+<p><code>int printf(const char *format, ...);</code></p>
+<ul>
+    <li><code>format</code> 是一個字串，稱為格式控制字串，它包含了要輸出的普通字元和格式指定符 (Format Specifiers)。</li>
+    <li><code>...</code> 表示可變參數列，其數量和型態必須與格式指定符一一對應。</li>
+    <li>函式會將格式字串中的普通字元原樣輸出，並將格式指定符替換為對應參數的值，轉換成指定格式後輸出。</li>
+    <li>回傳成功輸出的字元總數。若發生錯誤，則回傳一個負值。</li>
+</ul>
+<p><strong>常用的格式指定符：</strong></p>
+<table border="1" style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr>
+            <th>指定符</th>
+            <th>對應資料型態</th>
+            <th>輸出格式</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>%d</code> 或 <code>%i</code></td>
+            <td><code>int</code></td>
+            <td>有號十進位整數</td>
+        </tr>
+        <tr>
+            <td><code>%u</code></td>
+            <td><code>unsigned int</code></td>
+            <td>無號十進位整數</td>
+        </tr>
+        <tr>
+            <td><code>%o</code></td>
+            <td><code>unsigned int</code></td>
+            <td>無號八進位整數</td>
+        </tr>
+        <tr>
+            <td><code>%x</code> 或 <code>%X</code></td>
+            <td><code>unsigned int</code></td>
+            <td>無號十六進位整數 (<code>x</code>用小寫a-f, <code>X</code>用大寫A-F)</td>
+        </tr>
+        <tr>
+            <td><code>%f</code></td>
+            <td><code>double</code> (<code>float</code> 會被提升為 <code>double</code>)</td>
+            <td>十進位浮點數 (預設小數點後6位)</td>
+        </tr>
+        <tr>
+            <td><code>%e</code> 或 <code>%E</code></td>
+            <td><code>double</code></td>
+            <td>科學記號表示法 (<code>e</code>用小寫e, <code>E</code>用大寫E)</td>
+        </tr>
+        <tr>
+            <td><code>%g</code> 或 <code>%G</code></td>
+            <td><code>double</code></td>
+            <td>根據數值大小自動選擇 <code>%f</code> 或 <code>%e</code> (<code>%g</code>用小寫e, <code>%G</code>用大寫E)</td>
+        </tr>
+        <tr>
+            <td><code>%c</code></td>
+            <td><code>int</code> (傳入字元的ASCII碼)</td>
+            <td>單一字元</td>
+        </tr>
+        <tr>
+            <td><code>%s</code></td>
+            <td><code>char*</code> (字串，以 <code>\0</code> 結尾的字元陣列)</td>
+            <td>字串</td>
+        </tr>
+        <tr>
+            <td><code>%p</code></td>
+            <td><code>void*</code> (指標)</td>
+            <td>指標位址 (通常以十六進位表示，具體格式依實作而定)</td>
+        </tr>
+        <tr>
+            <td><code>%%</code></td>
+            <td>無</td>
+            <td>輸出一個 <code>%</code> 符號</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>格式指定符的修飾：</strong> (在 <code>%</code> 和指定字母之間)</p>
+<ul>
+    <li><strong>旗標 (Flags)：</strong>
+        <ul>
+            <li><code>-</code>：靠左對齊 (預設為靠右對齊)。</li>
+            <li><code>+</code>：對於有號數，強制顯示正負號 (即使是正數也會顯示 <code>+</code>)。</li>
+            <li>空格：對於有號數，若為正數則在前面留一空格，若為負數則顯示負號。</li>
+            <li><code>0</code>：對於數值，若欄寬大於數值寬度，則在左邊以0填充 (若有 <code>-</code> 旗標則此旗標無效)。</li>
+            <li><code>#</code>：對於 <code>%o</code>，在非零值前加 <code>0</code>；對於 <code>%x</code> 或 <code>%X</code>，在非零值前加 <code>0x</code> 或 <code>0X</code>。對於浮點數，強制輸出小數點。</li>
+        </ul>
+    </li>
+    <li><strong>欄寬 (Width)：</strong> 一個十進位數字，指定最小輸出欄位寬度。若實際寬度不足，則以空格 (或0，若有0旗標) 填充。若實際寬度超過，則按實際寬度輸出。可以用 <code>*</code> 指定，此時欄寬由參數列中的一個 <code>int</code> 參數提供。</li>
+    <li><strong>精確度 (Precision)：</strong> 以 <code>.</code> 開頭，後接一個十進位數字。
+        <ul>
+            <li>對整數 (<code>d, i, o, u, x, X</code>)：指定最少輸出數字位數，不足則前面補0。若數值為0且精確度為0，則不輸出任何字元。</li>
+            <li>對浮點數 (<code>f, e, E</code>)：指定小數點後顯示的位數。</li>
+            <li>對 <code>g, G</code>：指定最大有效數字位數。</li>
+            <li>對字串 (<code>s</code>)：指定最多輸出的字元數。</li>
+            <li>可以用 <code>.*</code> 指定，此時精確度由參數列中的一個 <code>int</code> 參數提供。</li>
+        </ul>
+    </li>
+    <li><strong>長度修飾符 (Length Modifiers)：</strong>
+        <ul>
+            <li><code>h</code>：用於整數，表示對應參數是 <code>short int</code> 或 <code>unsigned short int</code> (例如 <code>%hd</code>, <code>%hu</code>)。<code>hh</code> 表示 <code>char</code> (例如 <code>%hhd</code>)。</li>
+            <li><code>l</code>：用於整數，表示對應參數是 <code>long int</code> 或 <code>unsigned long int</code> (例如 <code>%ld</code>, <code>%lu</code>)。用於浮點數 (<code>%lf</code>, <code>%le</code>, <code>%lg</code>) 在 <code>printf</code> 中與沒有 <code>l</code> 相同，因為 <code>float</code> 會提升為 <code>double</code>。但在 <code>scanf</code> 中 <code>%lf</code> 表示讀取 <code>double</code>。</li>
+            <li><code>ll</code>：用於整數，表示對應參數是 <code>long long int</code> 或 <code>unsigned long long int</code> (例如 <code>%lld</code>, <code>%llu</code>)。 (C99)</li>
+            <li><code>L</code>：用於浮點數，表示對應參數是 <code>long double</code> (例如 <code>%Lf</code>, <code>%Le</code>, <code>%Lg</code>)。</li>
+        </ul>
+    </li>
+</ul>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    int item_num = 12;
+    float price = 23.5f;
+    char grade = 'A';
+    char name[] = "電腦"; // C字串是以 null 字元 '\0' 結尾的字元陣列
+
+    printf("項目編號: %d\n", item_num);
+    printf("價格: %f (預設6位小數)\n", price);
+    printf("價格: %.2f (指定2位小數)\n", price);
+    printf("等級: %c\n", grade);
+    printf("品名: %s\n", name);
+
+    printf("\n--- 欄寬與對齊 ---\n");
+    printf("編號: [%5d]\n", item_num);   // 靠右對齊，寬度5
+    printf("編號: [%-5d]\n", item_num);  // 靠左對齊，寬度5
+    printf("編號: [%05d]\n", item_num);  // 靠右對齊，寬度5，不足補0
+
+    printf("\n--- 浮點數格式 ---\n");
+    double pi = 3.1415926535;
+    printf("Pi (%%f): %f\n", pi);
+    printf("Pi (%%.4f): %.4f\n", pi);
+    printf("Pi (%%e): %e\n", pi);
+    printf("Pi (%%.3E): %.3E\n", pi);
+    printf("Pi (%%g): %g\n", pi);
+
+    printf("\n--- 其他 ---\n");
+    int positive_num = 100;
+    int negative_num = -50;
+    printf("正數 (+旗標): [%+d]\n", positive_num);
+    printf("負數 (+旗標): [%+d]\n", negative_num);
+    printf("正數 (空格旗標): [% d]\n", positive_num);
+    printf("負數 (空格旗標): [% d]\n", negative_num);
+
+    unsigned int hex_val = 255;
+    printf("十六進位 (#旗標): %#x\n", hex_val); // 輸出 0xff
+    printf("八進位 (#旗標): %#o\n", hex_val);   // 輸出 0377
+
+    int dynamic_width = 7;
+    printf("動態寬度: [%*d]\n", dynamic_width, item_num);
+    int dynamic_precision = 3;
+    printf("動態精確度: [%.*f]\n", dynamic_precision, price);
+
+    return 0;
+}
+</code></pre>
+
+<h4>5-4 格式化輸入：<code>scanf()</code></h4>
+<p><code>int scanf(const char *format, ...);</code></p>
+<ul>
+    <li><code>format</code> 是一個格式控制字串，它指定了期望從輸入中讀取的資料型態和格式。</li>
+    <li><code>...</code> 表示可變參數列，這些參數必須是指標 (記憶體位址)，指向用於儲存讀取到的資料的變數。這是因為 <code>scanf</code> 需要修改這些變數的值。</li>
+    <li><code>scanf</code> 會根據格式字串嘗試從標準輸入 (<code>stdin</code>) 讀取並轉換資料。</li>
+    <li>它會跳過輸入中的空白字元 (空格、跳位、換行)，除非格式指定符是 <code>%c</code>, <code>%[]</code> (字元集) 或 <code>%n</code>。</li>
+    <li>回傳成功讀取並賦值的項目數量。如果發生輸入錯誤或在任何資料被成功讀取前到達檔案結尾，則回傳 <code>EOF</code>。如果發生匹配失敗 (輸入不符合格式)，則停止讀取並回傳已成功賦值的項目數。</li>
+</ul>
+<p><strong>常用的格式指定符 (與 <code>printf</code> 類似，但意義是讀取)：</strong></p>
+<table border="1" style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr>
+            <th>指定符</th>
+            <th>期望輸入</th>
+            <th>對應參數型態</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>%d</code></td>
+            <td>有號十進位整數</td>
+            <td><code>int*</code></td>
+        </tr>
+        <tr>
+            <td><code>%i</code></td>
+            <td>整數 (可為十進位、八進位(0開頭)、十六進位(0x開頭))</td>
+            <td><code>int*</code></td>
+        </tr>
+        <tr>
+            <td><code>%u</code></td>
+            <td>無號十進位整數</td>
+            <td><code>unsigned int*</code></td>
+        </tr>
+        <tr>
+            <td><code>%o</code></td>
+            <td>八進位整數</td>
+            <td><code>unsigned int*</code></td>
+        </tr>
+        <tr>
+            <td><code>%x</code>, <code>%X</code></td>
+            <td>十六進位整數</td>
+            <td><code>unsigned int*</code></td>
+        </tr>
+        <tr>
+            <td><code>%f</code>, <code>%e</code>, <code>%E</code>, <code>%g</code>, <code>%G</code></td>
+            <td>浮點數</td>
+            <td><code>float*</code> (注意：不是 <code>double*</code>，除非使用 <code>l</code> 修飾)</td>
+        </tr>
+        <tr>
+            <td><code>%c</code></td>
+            <td>單一字元 (不會跳過空白字元)</td>
+            <td><code>char*</code></td>
+        </tr>
+        <tr>
+            <td><code>%s</code></td>
+            <td>字串 (讀取直到遇到空白字元，並自動在結尾添加 <code>\0</code>)</td>
+            <td><code>char*</code> (指向足夠大的字元陣列)</td>
+        </tr>
+        <tr>
+            <td><code>%[...]</code></td>
+            <td>字元集掃描 (讀取符合集合中的字元)</td>
+            <td><code>char*</code></td>
+        </tr>
+        <tr>
+            <td><code>%[^...]</code></td>
+            <td>字元集排除掃描 (讀取直到遇到集合中的字元)</td>
+            <td><code>char*</code></td>
+        </tr>
+    </tbody>
+</table>
+<p><strong><code>scanf</code> 的長度修飾符：</strong></p>
+<ul>
+    <li><code>h</code>：用於 <code>d, i, o, u, x</code>，表示參數是 <code>short*</code> 或 <code>unsigned short*</code>。<code>hh</code> 表示 <code>char*</code> (例如 <code>%hhd</code>)。</li>
+    <li><code>l</code>：用於 <code>d, i, o, u, x</code>，表示參數是 <code>long*</code> 或 <code>unsigned long*</code>。用於 <code>f, e, g</code> (即 <code>%lf</code>, <code>%le</code>, <code>%lg</code>)，表示參數是 <code>double*</code>。</li>
+    <li><code>ll</code>：用於 <code>d, i, o, u, x</code>，表示參數是 <code>long long*</code> 或 <code>unsigned long long*</code> (C99)。</li>
+    <li><code>L</code>：用於 <code>f, e, g</code>，表示參數是 <code>long double*</code>。</li>
+</ul>
+<p><strong><code>scanf</code> 的重要注意事項：</strong></p>
+<ul>
+    <li><strong>必須提供位址：</strong> 傳遞給 <code>scanf</code> 的參數必須是變數的記憶體位址，通常使用取址運算子 <code>&amp;</code>。例如 <code>scanf("%d", &amp;num);</code>。對於字元陣列 (字串)，陣列名稱本身就代表起始位址，所以不需要 <code>&amp;</code> (例如 <code>scanf("%s", str_array);</code>)。</li>
+    <li><strong>緩衝區溢位：</strong> 使用 <code>%s</code> 讀取字串時，必須確保接收的字元陣列有足夠的空間存放輸入的字串以及結尾的 <code>\0</code>，否則可能導致緩衝區溢位，這是一個嚴重的安全漏洞。可以指定最大讀取寬度來防止，例如 <code>%19s</code> 表示最多讀取19個字元（留一個位置給 <code>\0</code>）。</li>
+    <li><strong>輸入緩衝區的換行符：</strong> <code>scanf</code> 在讀取完一個數字後，按下 Enter 鍵產生的換行符 <code>\n</code> 仍然會留在輸入緩衝區中。如果下一次 <code>scanf</code> 或 <code>getchar()</code> 要讀取字元，它可能會立即讀到這個殘留的換行符。
+        <ul>
+            <li>解決方法之一是在格式字串中加入一個空格來消耗掉空白字元，例如 <code>scanf(" %c", &amp;ch);</code> (注意 <code>%c</code> 前的空格)。</li>
+            <li>或者在讀取數字後，用一個 <code>getchar()</code> 或一個迴圈來清除緩衝區中的換行符。</li>
+        </ul>
+    </li>
+    <li><strong>回傳值檢查：</strong> 檢查 <code>scanf</code> 的回傳值是很重要的，可以判斷是否成功讀取了預期數量的項目。</li>
+</ul>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    float weight;
+    char initial;
+    char name[50]; // 字元陣列來儲存字串，大小為50 (最多49個字元 + '\0')
+    double pi_val;
+
+    printf("請輸入您的年齡 (整數): ");
+    int result = scanf("%d", &age);
+    if (result != 1) {
+        printf("年齡輸入錯誤!\n");
+        // 清除非法輸入
+        while(getchar()!='\n');
+        // return 1; // 可以選擇終止程式
+    }
+
+    // 清除上一個 scanf 留下的換行符
+    // getchar(); // 簡單但有時不可靠
+
+    // 更可靠的清除方式：在下一個 %c 前加空格，或者使用迴圈
+    // while(getchar() != '\n'); // 清除到行尾
+
+    printf("請輸入您的姓氏第一個字母: ");
+    // %c 前加空格可以讓 scanf 跳過之前的空白字元(包括換行符)
+    result = scanf(" %c", &initial);
+    if (result != 1) {
+        printf("字母輸入錯誤!\n");
+        while(getchar()!='\n');
+    }
+
+    printf("請輸入您的體重 (浮點數, kg): ");
+    result = scanf("%f", &weight); // float 使用 %f
+    if (result != 1) {
+        printf("體重輸入錯誤!\n");
+        while(getchar()!='\n');
+    }
+
+    printf("請輸入一個 double 型態的數值: ");
+    result = scanf("%lf", &pi_val); // double 使用 %lf
+    if (result != 1) {
+        printf("double 輸入錯誤!\n");
+        while(getchar()!='\n');
+    }
+
+    printf("請輸入您的名字 (不含空格，最多49字元): ");
+    result = scanf("%49s", name); // %s 會讀到第一個空白字元為止，name是陣列名，本身是位址
+                                // %49s 限制最多讀取49個字元，防止緩衝區溢位
+    if (result != 1) {
+        printf("名字輸入錯誤!\n");
+        // 字串輸入失敗時，緩衝區處理可能更複雜
+    }
+
+    printf("\n--- 輸入結果 ---\n");
+    printf("年齡: %d 歲\n", age);
+    printf("姓氏首字母: %c\n", initial);
+    printf("體重: %.1f kg\n", weight);
+    printf("Double值: %lf\n", pi_val);
+    printf("名字: %s\n", name);
+
+    // 讀取一行包含空格的文字
+    char line[100];
+    printf("請輸入一句話 (可包含空格，最多99字元):\n");
+    // 清除之前 scanf("%s", name) 可能留下的換行符
+    // 如果 name 輸入後直接按 Enter，換行符會被下面的 fgets 讀走
+    // 如果 name 輸入後還有其他非空白字元被 scanf 忽略，那些字元也會影響 fgets
+    // 一個常見的處理方式是在 scanf("%s", ...) 之後加 getchar();
+    // 或者更安全地清除到行尾
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+    // 使用 fgets 讀取整行，更安全
+    if (fgets(line, sizeof(line), stdin) != NULL) {
+        // fgets 可能會讀取換行符，如果緩衝區夠大且確實輸入了換行符
+        // 可以手動移除它
+        size_t len = 0;
+        while(line[len] != '\0') len++; // 計算字串長度
+        if (len > 0 && line[len-1] == '\n') {
+            line[len-1] = '\0';
+        }
+        printf("您輸入的話是: %s\n", line);
+    }
+
+
+    return 0;
+}
+</code></pre>
+<p><strong><code>fgets()</code> 和 <code>sscanf()</code>：</strong></p>
+<p>為了更安全地處理字串輸入（尤其是包含空格的字串）並避免 <code>scanf</code> 的一些陷阱，通常建議組合使用 <code>fgets()</code> 和 <code>sscanf()</code>。</p>
+<ul>
+    <li><strong><code>char *fgets(char *str, int n, FILE *stream)</code>：</strong>
+        <ul>
+            <li>從指定的 <code>stream</code> (例如 <code>stdin</code>) 讀取最多 <code>n-1</code> 個字元到字元陣列 <code>str</code> 中，或者直到讀到換行符 <code>\n</code>，或者到達檔案結尾 <code>EOF</code>。</li>
+            <li>如果讀入了換行符，它會被存儲在字串中。</li>
+            <li>總會在讀取的字元後面自動添加一個空字元 <code>\0</code>。</li>
+            <li>比 <code>gets()</code> 安全得多 (<code>gets()</code> 已被棄用，因為它不檢查緩衝區大小，極易造成溢位)。</li>
+            <li>成功時回傳 <code>str</code>，失敗或到檔案結尾且未讀取任何字元時回傳 <code>NULL</code>。</li>
+        </ul>
+    </li>
+    <li><strong><code>int sscanf(const char *str, const char *format, ...)</code>：</strong>
+        <ul>
+            <li>功能與 <code>scanf</code> 類似，但是從一個已知的字串 <code>str</code> 中讀取和解析資料，而不是從標準輸入。</li>
+            <li>這樣可以先用 <code>fgets</code> 安全地讀取一整行輸入，然後再用 <code>sscanf</code> 從該行中解析出所需的各個部分。</li>
+        </ul>
+    </li>
+</ul>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt; // 為了 strlen (雖然上面手動計算了)
+
+int main() {
+    char buffer[100];
+    int id;
+    char product_name[50];
+    float product_price;
+
+    printf("請輸入產品資訊 (ID 名稱 價格)，例如: 101 蘋果 12.5\n");
+    if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+        // 移除 fgets 可能讀入的換行符
+        buffer[strcspn(buffer, "\n")] = 0; // 找到第一個 \n 並替換為 \0
+
+        int items_parsed = sscanf(buffer, "%d %49s %f", &id, product_name, &product_price);
+
+        if (items_parsed == 3) {
+            printf("\n--- 解析結果 ---\n");
+            printf("ID: %d\n", id);
+            printf("產品名稱: %s\n", product_name);
+            printf("價格: %.2f\n", product_price);
+        } else {
+            printf("輸入格式不符或解析失敗，解析了 %d 個項目。\n", items_parsed);
+            printf("您輸入的是: %s\n", buffer);
+        }
+    } else {
+        printf("讀取輸入失敗。\n");
+    }
+
+    return 0;
+}
+</code></pre>
+<p><em>(此處省略了Word文檔中可能存在的练习题指引，因为练习题会在另一部分单独处理)</em></p>

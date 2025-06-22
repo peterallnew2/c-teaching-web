@@ -1,0 +1,78 @@
+<h4>2-1 C語言的特性</h4>
+<p>C語言是一種高階、結構化的程式語言，由美國貝爾實驗室的丹尼斯·里奇（Dennis Ritchie）於1972年所開發。它結合了高階語言的易用性與低階語言的系統控制能力。</p>
+<ul>
+    <li><strong>簡潔有力：</strong> C語言的語法相對簡單，關鍵字數量不多，適合初學者入門。</li>
+    <li><strong>執行效率高：</strong> C語言編譯後的程式執行速度接近組合語言，適用於系統程式設計。</li>
+    <li><strong>功能豐富：</strong> 提供了多樣的運算子和資料型態，可以處理複雜的運算。</li>
+    <li><strong>移植性高：</strong> 只要有對應的編譯器，C程式碼稍作修改（或无需修改）即可在不同平台上編譯執行。</li>
+    <li><strong>模組化設計：</strong> 支援函式的使用，可以將程式分割成多個模組，易於管理和維護。</li>
+</ul>
+
+<h4>2-2 C程式的結構</h4>
+<p>一個基本的C程式主要由以下幾個部分組成：</p>
+<ol>
+    <li><strong>前置處理指令 (Preprocessor Directives)：</strong> 例如 <code>#include</code>，用於在編譯前引入標頭檔。</li>
+    <li><strong>全域宣告 (Global Declarations)：</strong> 在所有函式之外宣告的變數或函式。</li>
+    <li><strong><code>main()</code> 函式：</strong> 每個C程式都必須有一個 <code>main()</code> 函式，它是程式執行的起點。</li>
+    <li><strong>使用者自訂函式 (User-defined Functions)：</strong> 由程式設計師自行定義的函式，用來執行特定任務。</li>
+    <li><strong>註解 (Comments)：</strong> 用來說明程式碼，不會被編譯器執行。C語言支援兩種註解方式：<code>// 單行註解</code> 和 <code>/* 多行註解 */</code>。</li>
+</ol>
+
+<h4>2-3 第一個C程式：Hello World</h4>
+<p>學習任何程式語言的第一步通常是撰寫一個「Hello, World!」程式。以下是一個簡單的C程式範例：</p>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;  // 引入標準輸入輸出標頭檔
+
+/*
+ 這是一個多行註解的範例。
+ main函式是程式的進入點。
+*/
+int main() {
+    // printf() 函式用於將文字輸出到螢幕
+    printf("Hello, World!\n");
+
+    return 0;  // 表示程式正常結束
+}
+</code></pre>
+<p><strong>程式碼說明：</strong></p>
+<ul>
+    <li><code>#include &lt;stdio.h&gt;</code>：告訴編譯器引入標準輸入輸出函式庫的資訊。<code>stdio.h</code> 是一個標頭檔，其中包含了 <code>printf()</code> 等函式的宣告。</li>
+    <li><code>int main()</code>：<code>main</code> 是函式名稱，代表主函式。<code>int</code> 表示此函式執行完畢後會回傳一個整數值。括號 <code>()</code> 表示這是一個函式。</li>
+    <li><code>{ ... }</code>：大括號標示出函式的範圍，也稱為函式主體。</li>
+    <li><code>printf("Hello, World!\n");</code>：這是一個C敘述。<code>printf()</code> 是一個標準庫函式，用於將引號內的字串（以及可能的變數值）輸出到螢幕上。<code>\n</code> 是一個跳脫序列，代表換行。</li>
+    <li><code>return 0;</code>：表示 <code>main</code> 函式執行成功並結束，回傳值0給作業系統。通常，回傳0代表程式正常結束，非0值代表出現錯誤。</li>
+    <li>C語言的每個敘述都必須以分號 <code>;</code> 結尾。</li>
+</ul>
+
+<h4>2-4 編譯與執行C程式</h4>
+<p>C程式的執行過程通常包括以下步驟：</p>
+<ol>
+    <li><strong>編輯 (Edit)：</strong> 使用文字編輯器撰寫C原始程式碼，並存成副檔名為 <code>.c</code> 的檔案（例如 <code>hello.c</code>）。</li>
+    <li><strong>編譯 (Compile)：</strong> 使用C編譯器（例如 GCC, Clang）將原始程式碼轉換為機器碼（目的檔，通常副檔名為 <code>.o</code> 或 <code>.obj</code>）。編譯過程會檢查語法錯誤。
+        <pre><code class="language-bash">
+gcc -c hello.c -o hello.o
+        </code></pre>
+    </li>
+    <li><strong>連結 (Link)：</strong> 將編譯產生的目的檔與所需的函式庫連結起來，產生可執行檔（在Windows上副檔名為 <code>.exe</code>，在Linux/macOS上通常沒有副檔名）。
+        <pre><code class="language-bash">
+gcc hello.o -o hello
+        </code></pre>
+        <p>也可以將編譯和連結合併為一步：</p>
+        <pre><code class="language-bash">
+gcc hello.c -o hello
+        </code></pre>
+    </li>
+    <li><strong>執行 (Execute)：</strong> 執行產生的可執行檔。
+        <pre><code class="language-bash">
+./hello  # 在 Linux/macOS 上
+hello.exe # 在 Windows 命令提示字元上
+        </code></pre>
+    </li>
+</ol>
+<p><strong>重點提示：</strong></p>
+<ul>
+    <li>原始程式檔：副檔名為 <code>.c</code>。</li>
+    <li>目的檔：編譯後產生，包含機器碼但尚未連結。</li>
+    <li>執行檔：連結後產生，可以直接執行。</li>
+</ul>
+<p><em>(此處省略了Word文檔中可能存在的练习题指引，因为练习题会在另一部分单独处理)</em></p>
