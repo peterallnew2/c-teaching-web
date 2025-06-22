@@ -1,0 +1,281 @@
+<h4>3-1 資料型態概論</h4>
+<p>在C語言中，變數在使用前必須宣告其「資料型態」(Data Type)。資料型態決定了變數可以儲存何種類型的資料，以及該資料在記憶體中所佔用的空間大小和表示方式。</p>
+<p>C語言的資料型態主要可以分為：</p>
+<ul>
+    <li><strong>基本資料型態：</strong>
+        <ul>
+            <li>整數型態 (Integer Types)：<code>char</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>long long</code> (C99標準)</li>
+            <li>浮點數型態 (Floating-point Types)：<code>float</code>, <code>double</code>, <code>long double</code></li>
+        </ul>
+    </li>
+    <li><strong>衍生資料型態：</strong>
+        <ul>
+            <li>陣列 (Arrays)</li>
+            <li>指標 (Pointers)</li>
+            <li>結構 (Structures)</li>
+            <li>聯合 (Unions)</li>
+        </ul>
+    </li>
+    <li><strong>列舉型態 (Enumeration Type)：</strong> <code>enum</code></li>
+    <li><strong>空型態 (Void Type)：</strong> <code>void</code>，表示無回傳值或無參數，或通用型指標。</li>
+</ul>
+
+<h4>3-2 整數資料型態</h4>
+<p>整數型態用來儲存沒有小數部分的數值。不同的整數型態提供的數值範圍和記憶體大小不同。</p>
+<table border="1" style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr>
+            <th>型態</th>
+            <th>典型大小 (位元組)</th>
+            <th>典型範圍 (近似)</th>
+            <th>格式指定字元 (printf/scanf)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>char</code></td>
+            <td>1</td>
+            <td>-128 到 127 或 0 到 255 (視為字元或小整數)</td>
+            <td><code>%c</code> (字元), <code>%hhd</code> (有號小整數)</td>
+        </tr>
+        <tr>
+            <td><code>short int</code> (或 <code>short</code>)</td>
+            <td>2</td>
+            <td>-32,768 到 32,767</td>
+            <td><code>%hd</code></td>
+        </tr>
+        <tr>
+            <td><code>int</code></td>
+            <td>2 或 4 (常見為4)</td>
+            <td>-32,768 到 32,767 或 -2,147,483,648 到 2,147,483,647</td>
+            <td><code>%d</code>, <code>%i</code></td>
+        </tr>
+        <tr>
+            <td><code>long int</code> (或 <code>long</code>)</td>
+            <td>4 或 8 (常見為4或8，至少與int一樣大)</td>
+            <td>-2,147,483,648 到 2,147,483,647 或更大</td>
+            <td><code>%ld</code></td>
+        </tr>
+        <tr>
+            <td><code>long long int</code> (或 <code>long long</code>) (C99)</td>
+            <td>8</td>
+            <td>約 -9 x 10<sup>18</sup> 到 9 x 10<sup>18</sup></td>
+            <td><code>%lld</code></td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>修飾字 (Modifiers)：</strong></p>
+<ul>
+    <li><code>signed</code>：表示有號數（可為正、負或零），為預設。</li>
+    <li><code>unsigned</code>：表示無號數（僅可為正或零），可以擴大正數的表示範圍。例如 <code>unsigned int</code>。</li>
+</ul>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt; // 包含各種型態極值的定義
+
+int main() {
+    short s_var = 30000;
+    int i_var = 1000000;
+    long l_var = 1234567890L; // L後綴表示long型態常數
+    long long ll_var = 123456789012345LL; // LL後綴表示long long型態常數
+    unsigned int ui_var = 4000000000U; // U後綴表示unsigned
+
+    printf("short s_var = %hd\n", s_var);
+    printf("int i_var = %d\n", i_var);
+    printf("long l_var = %ld\n", l_var);
+    printf("long long ll_var = %lld\n", ll_var);
+    printf("unsigned int ui_var = %u\n", ui_var);
+
+    printf("\nINT_MAX = %d\n", INT_MAX);
+    printf("UINT_MAX = %u\n", UINT_MAX);
+    printf("CHAR_BIT = %d (bits per char)\n", CHAR_BIT);
+
+    return 0;
+}
+</code></pre>
+
+<h4>3-3 浮點數資料型態</h4>
+<p>浮點數型態用來儲存具有小數部分的數值，或表示範圍非常大的數值。它們以科學記號法的方式儲存。</p>
+<table border="1" style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr>
+            <th>型態</th>
+            <th>典型大小 (位元組)</th>
+            <th>精確度 (小數位數)</th>
+            <th>典型範圍 (近似)</th>
+            <th>格式指定字元</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>float</code></td>
+            <td>4</td>
+            <td>約 6-7 位</td>
+            <td>10<sup>-38</sup> 到 10<sup>38</sup></td>
+            <td><code>%f</code>, <code>%e</code> (科學記號)</td>
+        </tr>
+        <tr>
+            <td><code>double</code></td>
+            <td>8</td>
+            <td>約 15-16 位</td>
+            <td>10<sup>-308</sup> 到 10<sup>308</sup></td>
+            <td><code>%lf</code> (scanf中), <code>%f</code>, <code>%e</code> (printf中)</td>
+        </tr>
+        <tr>
+            <td><code>long double</code></td>
+            <td>10, 12 或 16 (通常至少10)</td>
+            <td>約 18-19 位</td>
+            <td>通常比 double 更大</td>
+            <td><code>%Lf</code></td>
+        </tr>
+    </tbody>
+</table>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;float.h&gt; // 包含浮點數相關極值的定義
+
+int main() {
+    float f_num = 3.14159f; // f後綴表示float型態常數
+    double d_num = 2.718281828459;
+    long double ld_num = 1.234567890123456789L; // L後綴表示long double
+
+    printf("float f_num = %f\n", f_num);
+    printf("double d_num = %.12f\n", d_num); // .12f 表示印出小數點後12位
+    printf("long double ld_num = %.18Lf\n", ld_num);
+
+    printf("\nFLT_DIG = %d (float precision in decimal digits)\n", FLT_DIG);
+    printf("DBL_DIG = %d (double precision in decimal digits)\n", DBL_DIG);
+    printf("LDBL_DIG = %d (long double precision in decimal digits)\n", LDBL_DIG);
+
+    return 0;
+}
+</code></pre>
+
+<h4>3-4 字元資料型態 (char)</h4>
+<p><code>char</code> 型態用於儲存單一字元，例如 'A', 'z', '9', '$' 等。在C語言中，字元實際上是以其對應的ASCII碼（或其他字元集編碼）的整數值儲存的。</p>
+<p><code>char</code> 型態佔用1個位元組的記憶體。它可以是 <code>signed char</code> (-128 到 127) 或 <code>unsigned char</code> (0 到 255)。預設的 <code>char</code> 是否有號取決於編譯器。</p>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    char ch1 = 'A';
+    char ch2 = 66; // 'B' 的 ASCII 碼是 66
+    char ch3;
+
+    printf("字元 ch1 = %c, ASCII碼 = %d\n", ch1, ch1);
+    printf("字元 ch2 = %c, ASCII碼 = %d\n", ch2, ch2);
+
+    printf("請輸入一個字元: ");
+    scanf("%c", &ch3); // 注意 scanf 取字元時，前面若有未讀取的換行符可能會影響
+    printf("您輸入的字元是: %c, ASCII碼 = %d\n", ch3, ch3);
+
+    return 0;
+}
+</code></pre>
+<p><strong>跳脫序列 (Escape Sequences)：</strong> 特殊字元，以反斜線 <code>\</code> 開頭，例如：</p>
+<ul>
+    <li><code>\n</code>：換行</li>
+    <li><code>\t</code>：水平定位字元 (tab)</li>
+    <li><code>\\</code>：反斜線本身</li>
+    <li><code>\'</code>：單引號</li>
+    <li><code>\"</code>：雙引號</li>
+    <li><code>\0</code>：空字元 (null character)，常用於字串結尾</li>
+</ul>
+
+<h4>3-5 常數 (Constants)</h4>
+<p>常數是在程式執行過程中其值不能被改變的量。</p>
+<p><strong>1. 字面常數 (Literal Constants)：</strong> 直接寫在程式碼中的值。</p>
+<ul>
+    <li>整數常數：<code>100</code>, <code>-50</code>, <code>077</code> (八進制), <code>0x1F</code> (十六進制)</li>
+    <li>浮點數常數：<code>3.14</code>, <code>-2.5e3</code> (科學記號), <code>1.23f</code> (float), <code>4.56L</code> (long double)</li>
+    <li>字元常數：<code>'A'</code>, <code>'\n'</code></li>
+    <li>字串常數 (String Literals)：<code>"Hello"</code> (實際上是字元陣列)</li>
+</ul>
+<p><strong>2. 符號常數 (Symbolic Constants)：</strong> 使用名稱來代表常數值。</p>
+<ul>
+    <li><strong>使用 <code>#define</code> 前置處理指令：</strong>
+        <pre><code class="language-c">
+#include &lt;stdio.h&gt;
+#define PI 3.14159
+#define GREETING "你好"
+
+int main() {
+    double radius = 5.0;
+    double area = PI * radius * radius;
+    printf("面積: %f\n", area);
+    printf("%s\n", GREETING);
+    return 0;
+}
+        </code></pre>
+        <code>#define</code> 只是簡單的文本替換，發生在編譯之前。
+    </li>
+    <li><strong>使用 <code>const</code> 關鍵字：</strong>
+        <pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    const double PI = 3.14159;
+    const char GREETING[] = "你好"; // const 字元陣列
+    // PI = 3.0; // 錯誤！const變數的值不能修改
+
+    double radius = 5.0;
+    double area = PI * radius * radius;
+    printf("面積: %f\n", area);
+    printf("%s\n", GREETING);
+    return 0;
+}
+        </code></pre>
+        <code>const</code> 宣告的變數具有型態，編譯器會進行型態檢查，通常更推薦使用 <code>const</code>。
+    </li>
+</ul>
+
+<h4>3-6 變數 (Variables)</h4>
+<p>變數是記憶體中一塊被命名的儲存空間，用來儲存資料，其值在程式執行過程中可以改變。</p>
+<p><strong>變數宣告：</strong> 在使用變數前必須先宣告，指定其資料型態和名稱。</p>
+<p>語法：<code>資料型態 變數名稱1, 變數名稱2, ...;</code></p>
+<pre><code class="language-c">
+int age;
+float salary;
+char initial;
+double pi_value, gravity_constant;
+</code></pre>
+<p><strong>變數命名規則 (識別字命名規則)：</strong></p>
+<ul>
+    <li>可以由英文字母 (大小寫)、數字和底線 <code>_</code> 組成。</li>
+    <li>第一個字元必須是英文字母或底線。不能是數字。</li>
+    <li>C語言有大小寫之分 (<code>age</code> 和 <code>Age</code> 是不同的變數)。</li>
+    <li>不能使用C語言的關鍵字 (如 <code>int</code>, <code>while</code> 等) 作為變數名稱。</li>
+    <li>變數名稱應具有描述性，以增加程式可讀性。</li>
+</ul>
+<p><strong>變數初始化：</strong> 在宣告變數時給予其初始值。</p>
+<pre><code class="language-c">
+int count = 0; // 宣告整數變數 count 並初始化為 0
+char grade = 'A';
+float price = 199.99f;
+// 若未初始化，區域變數的值是不確定的 (垃圾值)
+// 全域變數和靜態變數若未初始化，預設為0或null
+</code></pre>
+<p><strong><code>sizeof</code> 運算子：</strong> 用來取得某個資料型態或變數在記憶體中所佔用的位元組數。</p>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a;
+    char b;
+    float c;
+    double d;
+
+    printf("sizeof(int) = %zu bytes\n", sizeof(int));
+    printf("sizeof(a) = %zu bytes\n", sizeof(a));
+    printf("sizeof(char) = %zu bytes\n", sizeof(char));
+    printf("sizeof(b) = %zu bytes\n", sizeof(b));
+    printf("sizeof(float) = %zu bytes\n", sizeof(float));
+    printf("sizeof(c) = %zu bytes\n", sizeof(c));
+    printf("sizeof(double) = %zu bytes\n", sizeof(double));
+    printf("sizeof(d) = %zu bytes\n", sizeof(d));
+    printf("sizeof(long long) = %zu bytes\n", sizeof(long long));
+    // %zu 是 C99 中用於 sizeof 回傳值 size_t 型態的格式指定字元
+    return 0;
+}
+</code></pre>
+<p><em>(此處省略了Word文檔中可能存在的练习题指引，因为练习题会在另一部分单独处理)</em></p>
