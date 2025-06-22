@@ -1,0 +1,490 @@
+
+( B ) 1.	已知下列程式碼，則其中 Printout 總共執行幾次？
+(A)4	(B)5	(c)6	(D)7。	【102 年工科技藝競賽】
+k=6; do {Printout; k=k*2;} while (k<100);
+( A ) 2.	設 A 的值為 0000000，B 的值為 1000000，則經過(A OR B) AND (NOT B)運算後的結果為何？
+(A)0000000	(B)1111111	(c)1000000	(D)0111111。	【102 年工科技藝競賽】
+( B ) 3.	當下列程式片段執行完畢後，變數 count 的數值為何？
+(A)50	(B)45	(c)30	(D)20。	【102 年工科技藝競賽】
+int count=0;
+for(int i=5; i<=10; i=i+1) for(int j=1; j<=i; j=j+1)
+for (int k=1; k<=j; k=k+1) if (i==j) count=count+1;
+( B ) 4.	當下列程式片段執行完畢後，變數 x 的數值為何？
+(A)50	(B)45	(c)30	(D)20。	【102 年工科技藝競賽】
+int n=0; int x=0; do{
+x += n; n++;
+}while (n<10);
+( c ) 5.	下列程式碼，while 迴圈內 i = i ＊ i 被執行多少次？
+(A)2	(B)3	(c)4	(D)5。	【103 年工科技藝競賽】
+i= 2; while (i < 800) {i = i * i;}
+( D ) 6.	下列程式，印出多少個 happy？
+(A)0	(B)1	(c)0	(D)無限個。	【103 年工科技藝競賽】
+i = 1;
+while (i <= 10) puts("happy");
+( D ) 7.	下面 f( )函式執行後所回傳的值為何？
+(A)1023	(B)1024	(c)2047	(D)2048。	【104 年工科技藝競賽】
+int f(){
+int p=2; while(p<2000){
+p=2*p;
+}
+return p;
+}
+
+
+
+
+( B ) 8.	一個迴圈程式碼如下，其中 m = m I k 總共執行幾次？
+(A)3 次	(B)4 次	(c)5 次	(D)6 次。	【104 年工科技藝競賽】
+k = 2; m=10000;
+do{ m = m / k; k = k * 3;
+}while (k<120) ;
+( A ) 9.	執行下列程式片段，請問最後 x 的值多少？
+(A)30	(B)50	(c)45	(D)90。	【104 年工科技藝競賽】
+int x = 50; int y = 90;
+if (y<95) if (y<200) x = 30; else x =45; printf("x = %d", x);
+( B ) 10.  執行下列程式碼之後，請問最後 s 的值多少？
+(A)5500	(B)2550	(c)5050	(D)2500。	【104 年工科技藝競賽】
+int s = 0;
+for (int i=2; i<=100; i+=2) s+=i;
+printf("s = %d", s);
+( A ) 11.  執行下列程式後，請問最後 i 的值多少？
+(A)77	(B)70	(c)72	(D)7。	【104 年工科技藝競賽】
+int i;
+for (i = 7; i <= 72; i += 7)
+;
+printf("i is %d", i);
+
+
+
+( c ) 15. 布林代數式 A+A+A 等於：	(A)3A	(B)2A	(c)A	(D)1。【106 年工科技藝競賽】
+( c ) 16. 一個迴圈程式碼： k = 10000， while (k >=2) { k=kI8， } 其中 k=kI8 總共會執行幾次？
+(A)3 次	(B)4 次	(c)5 次	(D)6 次。	【106 年工科技藝競賽】
+( c ) 17.  下列程式碼，while 迴圈內 i = i ＊ i 被執行多少次？
+(A)2	(B)3	(c)4	(D)5。	【106 年工科技藝競賽】
+int i=2;
+while(i<800) {i=i*i;}
+( B ) 18.  執行下列 c 程式片段，請問最後輸出是？
+(A)1061130	(B)0311601	(c)106113	(D)311601。	【106 年工科技藝競賽】
+#include <stdio.h> void main(){
+int number=1061130, result; do{
+result = number %10; printf("%i", result); number = number/10;
+}while(number != 0);
+}
+( B ) 19. 執行下列 c 程式片段，請問輸出為下列何項？
+(A)325	(B)1300	(c)625	(D)2600。	【106 年工科技藝競賽】
+ 
+int x=4; int sum=0;
+while (x<=100){ sum+=x; x+=4;
+ 
+【110 年工科技藝競賽】
+ 
+}
+printf("sum=%d", sum);
+
+
+
+
+
+ 
+( A ) 21. 已知一個迴圈程式碼：k=2， while(k<=65535) k=k＊k， 估計其中 k=k＊k 總共執行多少次？	(A)4 次	(B)5 次	(c)6 次	(D)7 次。	【107 年工科技藝競賽】
+( B ) 22.  下面這一段程式的執行結果 n 的值為何？
+(A)2000	(B)2500	(c)5000	(D)10000。	【107 年工科技藝競賽】
+int n=0; int i=1;
+while(i<=100){ n=n+i; i=i+2;
+}
+printf("%d\n", n);
+
+
+
+
+
+
+
+
+( B ) 24.  執行下列 c 程式後，請問 y3 最後輸出是？
+(A)31	(B)43	(c)57	(D)73。	【107 年工科技藝競賽】
+#include <stdio.h> int main(){
+int y1, y2=13,y3=1; for (y1=0;y1<=y2;y3){
+y3 += y1; y1 += 2;
+}
+printf("%i", y3); return 0;
+}
+( B ) 25.  在程式片段中，若輸入 n 為 1234，請問執行結果為何？
+(A)1234	(B)10	(c)1	(D)4。	【108 年工科技藝競賽】
+int  n; int sum=0;
+scanf("%d", &n); while(n!=0){
+sum=sum+n%10; n=n/10;
+}
+printf("%d\n", sum);
+
+
+
+
+( D ) 26.  執行下列程式碼後，請問輸出結果為？	【108 年工科技藝競賽】
+(A)111 90	(B)112 21	(c)110 90	(D)110 20。
+#include <stdio.h> main(){
+int x=110, y=20; while(x>120){ y=x-y;x++; } printf("%3d%3d", x, y);
+}
+( B ) 27.  執行下列程式碼後，請問輸出結果為？
+(A)0 0	(B)4 21	(c)2 11	(D)3 11。	【108 年工科技藝競賽】
+#include <stdio.h> main(){
+int x=0, y=0; for(y=1;y<=20;y++)
+{int z=y%5; if(z==0) x++;} printf("%3d%3d",x,y);
+}
+( B ) 28.  執行下列程式碼後，請問輸出結果為？
+(A)8 2	(B)12 3	(c)2 6	(D)4 6。	【108 年工科技藝競賽】
+#include <stdio.h> main(){
+int a=5, b=2; if(a>b){a=a*b+2;b++;} else {a=a/2;b=b+4;} printf("%3d%3d",a,b);
+}
+( A ) 29.  執行下列程式碼後，請問輸出結果為？
+(A)28 4	(B)4 8	(c)9 12	(D)9 8。	【108 年工科技藝競賽】
+#include <stdio.h> main(){
+int n=4, x=7, y=8; switch(n){
+case 1: x=n;break;
+case 2: y=y+4;
+case 3: x=n+5;break;
+case 4: x=x*4; default: y=y-4;
+}
+printf("%2d%2d",x,y);
+}
+
+
+
+
+( c ) 30.  執行下列程式碼後，請問輸出結果為？
+(A)28 31	(B)40 31	(c)3 31	(D)900 35。	【108 年工科技藝競賽】
+#include <stdio.h> main(){
+int x=30, y;
+if (x<=5) {y=x^2; x+=5;} else{
+if (x<10) y=x-2; else{
+if(x<25) y=x+10; else y=x/10;
+} x++;
+}
+printf("%3d%3d",y,x);
+}
+( A ) 31.  當執行下列程式碼並輸入一串數值 5 2 -1 10 後，請問輸出結果為？
+(A)10 49 20	(B)10 48 20	(c)10 45 18	(D)10 3 6。	【108 年工科技藝競賽】
+#include <stdio.h> main(){
+int x=3, y=6, z=0; printf("請輸入一串數值："); do{
+scanf("%d", &z); x = x+z+y;
+y++;
+} while(z<10); y *= 2;
+printf("%3d%3d%3d",z,x,y);
+}
+( D ) 32.  執行下列程式碼之後，請問最後 sum 的值多少？
+(A)2000	(B)2525	(c)5050	(D)10100。	【108 年工科技藝競賽】
+int x=0; int sum=0;
+while(x <= 200){ sum += x;
+x += 2;
+}
+printf("sum=%d", sum);
+
+
+
+
+
+( c ) 33.  在下列的程式片段中，請問執行結果為何？
+(A)1 2 3 4	(B)1 2 3 4 5	(c)2 3 4	(D)2 3 4 5。	【109 年工科技藝競賽】
+#include <stdio.h> int main(){
+int a=1; while(++a<5){
+printf("%d", a);
+}
+return 0;
+}
+( D ) 34.  在下列的程式片段中，請問執行結果為何？
+(A).1 2 3 4	(B).1 2 3 4 5	(c).2 3 4	(D).2 3 4 5。	【109 年工科技藝競賽】
+#include <stdio.h> int main(){
+int a=1; while(a++<5){
+printf("%d", a);
+}
+return 0;
+}
+( A ) 35.  在下列的程式片段中，請問執行結果為何？
+(A). 1 2 3 4	(B). 1 2 3 4 5	(c). 2 3 4	(D). 2 3 4 5。	【109 年工科技藝競賽】
+#include <stdio.h> int main(){
+int a=1; do{
+printf("%d", a);
+}while(++a<5);
+
+return 0;
+}
+( B ) 36.  在下列的程式片段中，請問執行結果為何？
+(A). 1 2 3 4	(B). 1 2 3 4 5	(c). 2 3 4	(D). 2 3 4 5。	【109 年工科技藝競賽】
+#include <stdio.h> int main(){
+int a=1; do{
+printf("%d", a);
+}while(a++<5);
+
+return 0;
+}
+
+
+
+
+( D ) 37.  在下列的程式片段中，是利用輾轉相除法來求得 m 與 n 的最大公因數，請問迴圈內的敘述應該為何？	【109 年工科技藝競賽】
+ 
+(A)	r = m ％ n，
+m = n，
+n = r，
+(B)	r = m ％ n， n = r，
+m = n，
+
+(c)	n = r， m = n，
+r = m ％ n，
+(D)		m = n， n = r，
+r = m ％ n，
+
+
+#include <stdio.h>
+
+int main(){
+int m,n,r;
+
+while(scanf("%d%d", &m, &n) != EOF){ r = m % n;
+while (r != 0){
+ 
+
+ 
+
+}
+printf("%d\n", n);
+}
+return 0;
+}
+( D ) 38.  請問下列程式片段執行後，會印出什麼？
+(A)5 31	(B)15 31	(c)10 31	(D)12 31。	【109 年工科技藝競賽】
+main(){
+int x=2, y=0;
+for (y=1;y<=30;y++){
+int z=y%6; if (z==0) x+=2;
+}
+printf("%3d%3d", x, y);
+}
+( B ) 39.  請問下列程式片段執行後，輸出的第 12 個數值是？
+(A)31	(B)37	(c)41	(D)43。	【109 年工科技藝競賽】
+main(){
+int p,d; bool flag;
+for (p=2; p<=50; ++p){ flag = 1;
+for (d=2; d<p; ++d)
+if (p%d == 0) flag=0;
+if (flag != 0) printf("%i", p);
+}
+}
+
+
+
+( B )  40.  下列 cIc++程式片段之敘述，何者正確？	【109 年工科技藝競賽】
+ 
+(A)找出輸入數值最小值
+(B)找出輸入數值最大值 (c)輸入三個變數
+(D)輸出結果為 the output is.c
+( B ) 41. 在下列的程式片段中，中間的 13~16 行的 if 該如何寫，可以將 x， y， z 三個數由小到大排序？
+(A)	if (x > z){
+temp = x， x = z，
+z = temp，
+}
+(c)	if (x > y){
+temp = x， x = y，
+y = temp，
+}
+ 
+int a,b,c; cin>>a; cin>>b; c=a;
+if (b>c)
+c=b;
+cout<<"the output is:"<<c;
+【109 年工科技藝競賽】
+(B)	if (y > z){
+temp = y，
+y = z，
+z = temp，
+}
+(D)	if (z > x){
+temp = z， z = z，
+x = temp，
+}
+ 
+
+1.	#include <stdio.h>
+2.	
+3.	int main(){
+4.	int x, y, z;
+5.	int temp;
+6.	scanf("%d%d%d", &x, &y, &z);
+7.	if(x>y){
+8.	temp = x;
+9.	x = y;
+10.	y = temp;
+11.	}
+12.
+13.	if (){
+14.
+15.
+16.	}
+17.
+18.	if (x>y){
+19.	temp = x;
+20.	x = y;
+21.	y = temp;
+22.	}
+23.	printf("%d %d %d\n", x, y, z); 24.
+25.	return 0;
+26. }
+
+
+
+
+( D ) 42.  在下面的程式片段中 8~10 行，while 迴圈該如何撰寫，可以計算輸入的整數 n 每個位數的總和，例如輸入 1234，輸出 10。	【109 年工科技藝競賽】
+ 
+(A)	while(n != 0){
+n I= 10，
+sum += n％10，
+}
+(c)	while(n != 0){
+sum = n％10， n I= 10，
+}
+ 
+(B)	while(nI10 != 0){
+sum += n％10， n I= 10，
+}
+(D)	while(n != 0){
+sum += n％10， n I= 10，
+}
+ 
+
+1.	#include <stdio.h>
+2.	
+3.	int main(){
+4.	int n;
+5.	int sum = 0;
+6.	scanf("%d", &n);
+7.	
+8.	while(){
+9.	
+10.	}
+11.
+12.	printf("%d\n", sum);
+13.	return 0;
+14. }
+( c ) 43. 有關下面 c 程式片段之描述，int k=10， while (k==0) k=k-1， 何者正確？ (A)迴圈內程式，被執行 1 次	(B)迴圈內程式，會被一直執行 (c)迴圈內程式，1 次也不會被執行	(D)迴圈內程式，被執行 10 次。
+【110 年工科技藝競賽】
+( A ) 44. 請問下面 c 程式中，printf("＼n")共被執灖幾次？	【110 年工科技藝競賽】
+(A)4	(B)5	(c)8	(D)16。
+#include <stdio.h> int main() {
+for (int i=1; i<=4; i++){ for (int j=1; j<5; j++)
+printf("*");
+printf("\n");
+}
+}
+
+
+
+
+( c ) 45.  請問下列程式執行後，輸出結果為？	【110 年工科技藝競賽】
+(A)410.000000	(B)410.00	(c)480.00	(D)480.00000。
+#include <stdio.h> int main() {
+float salary = 400.0; if (salary > 400.0){
+float bonus = 10.0; salary += bonus;
+}
+else{
+salary += salary * 0.2;
+}
+printf("%.2f", salary);
+}
+( A ) 46.  請問以下程式，所輸出的第 3 個結果為何？	【110 年工科技藝競賽】
+(A)456	(B)23	(c)1	(D)78910。
+#include <stdio.h> int main() {
+int n=4, a=1;
+for (int i=1; i<=n; i++){
+for (int c=1; c<=i; c++){ printf("%d", a); a++;
+}
+printf("\n");
+}
+}
+( A ) 47. 根據右側之流程圖分析，當程式執行到最後一個列印方塊時，下列敘述何者正確？
+(A)程式結束時，K = 45
+(B)程式結束時，Q = 11
+(c)這是一個迴圈程式，迴圈內程式總共執行 9 次
+(D)程式結束時，Y = 10。	【110 年統測】
+( D ) 48.  下列 c 語言程式碼片段執行後，變數 y 的值為何？
+(A)45	(B)46	(c)47	(D)48。	【111 年統測】
+int y, a=45; if(a>=60)
+y=a+1; else if(a>=50)
+y=a+2; else
+y=a+3;
+
+
+
+( C ) 49.  下列 C 語言程式碼片段執行結果，變數 total 的值為何？	【111 年統測】
+(A)4	(B)8	(C)16	(D)28。
+int i, total=0;
+for( i=1; i<8; i+=2) total+=i;
+( D ) 50. 下列 C 語言程式碼片段執行結果，變數 y 的值為何？	【111 年統測】
+(A)42	(B)30	(C)12	(D)6。
+int y, r, a=30, b=42; r=a%b;
+while(r!=0)
+{
+a=b; b=r; r=a%b;
+}
+y=b;
+( A ) 51. 阿華想要了解 C 語言程式 if 條件敘述中常用的運算子&與&&的不同，撰寫如下程式，下列何者為程式執行結果？
+1	#include <stdio.h>
+2
+3	int main() { 4
+5	int a=0x0a;
+6	int b=0x05;
+7
+8	if(a & b)
+9	printf(“a&b=%d\n”, a&b);
+10	else
+11	printf(“a&&b=%d\n”, a&&b);
+12
+13	return 0;
+14	}
+(A)a&&b=1	(B)a&&b=0	(C)a&b=1	(D)a&b=0。	【112 年統測】
+
+
+
+
+
+
+
+
+
+4-79
+ 
+程式設計實習
+
+( B ) 52. 曉華想要知道三角函數 sin(x)在 x=0 之後遞增的變化情形，寫了如下的 C 語言程式碼，卻發現迴圈內行號 8 和行號 9 的程式碼只執行了一次，下列哪一種修改程式的方式可以讓迴圈內的程式碼多執行幾次？ (提示：sin(1)=0.8415)  【112 年統測】
+1	#include <stdio.h>	
+2	#include <math.h>	
+3	int x = 100;	
+4	int main(){	
+5	int x = 0;	
+6	double y = 0.0;	
+7	do{	
+8	y = 10*sin(x);	
+9	printf("x=%d, y=%lf\n", x,	y);
+10	} while(++x <= y);	
+11	printf("end of program\n");	
+12	return 0;	
+13	}	
+(A)把行號 3 中的 x=100 改為 x=0	(B)把行號 10 中的++x 改為 x++ (C)把行號 6 中 y 的初始值改為 –1.0	(D)把行號 3 中 x 的初始值改為 1。
+( A ) 53.  如下 C 語言程式，當程式執行完畢後，輸出為何？
+1	#include <stdio.h>
+2
+3	int main(){
+4	unsigned char i=3;
+5	switch ( (i&0x0e) % 5){
+6	case(1):
+7	printf("%c", '0'+i);
+8	break;
+9	case(2):
+10	printf("%c", '0'+i*i);
+11	case(3):
+12	printf("%c", 'a'+i*i);
+13	default:
+14	printf("%c", 'z');
+15	}
+16	return(0);
+17	}
+(A)9jz	(B)927z	(C)9270	(D) 9。	【113 年統測】
