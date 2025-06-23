@@ -1,32 +1,17 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
-// Define chapter data
-$chapters = [
-    'chapter_home' => ['title' => '課程總覽', 'title_short' => '總覽', 'content_file' => null], // Special key for home/overview
-    'chapter2' => ['title' => '第二章 C的初步', 'title_short' => 'CH2 C入門', 'content_file' => 'content/chapter02_teaching.html'],
-    'chapter3' => ['title' => '第三章 資料型態、常數與變數', 'title_short' => 'CH3 資料型態', 'content_file' => 'content/chapter03_teaching.html'],
-    'chapter4' => ['title' => '第四章 運算子、運算式與敘述', 'title_short' => 'CH4 運算子', 'content_file' => 'content/chapter04_teaching.html'], // Assumed to exist
-    'chapter5' => ['title' => '第五章 資料的輸入與輸出', 'title_short' => 'CH5 輸入輸出', 'content_file' => 'content/chapter05_teaching.html'],
-    'chapter6' => ['title' => '第六章 流程控制 - 選擇結構', 'title_short' => 'CH6 選擇結構', 'content_file' => 'content/chapter06_teaching.html'], // Assumed to exist
-    'chapter_cc6_3_practice' => ['title' => '第六章 Part 3 - 函式、範圍與應用 (練習)', 'title_short' => 'CH6-3 練習', 'content_file' => 'content/cc6-3_quiz_content_static.html'], // Special case
-    'chapter7' => ['title' => '第七章 流程控制 - 重複結構', 'title_short' => 'CH7 重複結構', 'content_file' => 'content/chapter07_teaching.html'],
-];
+// PHP logic for ee7-1.php - specific quiz page
 
-$default_chapter_key = 'chapter_home';
-$current_chapter_key = $_GET['chapter'] ?? $default_chapter_key;
-if (!array_key_exists($current_chapter_key, $chapters)) {
-    $current_chapter_key = $default_chapter_key;
-}
+$page_title_prefix = "C++ 物件導向";
+$html_title = $page_title_prefix . " - 試題練習 (EE7-1)";
 
-$current_chapter = $chapters[$current_chapter_key];
-$page_title_prefix = "C 語言互動學習";
-$html_title = $page_title_prefix . " - " . ($current_chapter['title_short'] ?? $current_chapter['title']);
+// The $current_exercises array will be defined directly in this file later (Step 2 of plan)
+// For now, initialize as empty to prevent errors if accessed before definition.
+$current_exercises = [];
 
-require_once 'content/exercises_data.php';
-$current_exercises = get_exercises_for_chapter($current_chapter_key);
-// For 'chapter_cc6_3_practice', exercises are expected to be in its static HTML content file.
-// If exercises_data.php also defines them for 'chapter_cc6_3_practice', that would be used for dynamic generation.
+// No need for external exercises_data.php or get_exercises_for_chapter for this specific page.
+// No need for $chapters array or $_GET['chapter'] logic for this specific page.
 
 ?>
 <!DOCTYPE html>

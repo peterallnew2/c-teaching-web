@@ -1,4 +1,3 @@
-/* styles.css */
 :root {
     --primary-color: #4a90e2;
     --background-color: #1e1e1e;
@@ -11,8 +10,8 @@
     --error-color: #f47174;
     --font-body: 'Noto Sans TC', sans-serif;
     --font-code: 'Source Code Pro', monospace;
+    --font-size-code: 12pt; /* Uniform code font size */
 }
-
 body {
     font-family: var(--font-body);
     background-color: var(--background-color);
@@ -20,167 +19,180 @@ body {
     line-height: 1.2;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: hidden; /* Changed from auto to hidden to make .tutorial-content scrollable */
 }
-
 .container {
     display: flex;
-    max-width: 100%;
+    max-width: 100%; /* Changed from 1200px to 100% for full width */
     height: 100vh;
-    margin: 0 auto;
-    padding: 0;
+    margin: 0 auto; /* Centering a full-width container has no effect but is harmless */
+    padding: 0; /* Removed top padding, will be handled by main-nav padding */
 }
-
 .tutorial-content {
     width: 70%;
-    min-width: 350px;
-    padding: 20px 40px;
+    min-width: 350px; /* Minimum width for the tutorial content pane */
+    padding: 20px 40px; /* Standard padding */
     box-sizing: border-box;
-    overflow-y: auto;
-    height: 100vh;
+    overflow-y: auto; /* Make this pane scrollable */
+    height: 100vh; /* Full viewport height */
 }
-
 .resizer {
     width: 8px;
     cursor: col-resize;
     background-color: var(--border-color);
-    flex-shrink: 0;
+    flex-shrink: 0; /* Prevent resizer from shrinking */
     transition: background-color 0.2s;
 }
-
-.resizer:hover {
+.resizer:hover, .resizer.is-dragging {
     background-color: var(--primary-color);
 }
-
 .interactive-panel {
     width: 30%;
-    min-width: 400px;
-    flex-grow: 1;
-    position: relative;
-    top: 0;
-    height: 100vh;
+    min-width: 420px; /* Minimum width for the interactive panel */
+    flex-grow: 1; /* Allow panel to grow if space is available */
+    position: relative; /* For potential absolute positioning of children */
+    height: 100vh; /* Full viewport height */
     padding: 20px;
     box-sizing: border-box;
+    display: flex; /* Using flex for internal layout */
 }
-
-h1,
-h2,
-h3 {
+h1, h2 {
     color: var(--header-color);
     font-weight: 700;
     border-bottom: 2px solid var(--primary-color);
     padding-bottom: 10px;
 }
+h1 { font-size: 2.0em; margin-bottom:15px;}
+h2 { font-size: 1.6em; margin-top: 25px; }
 
-h1 {
-    font-size: 2.5em;
+p, ul, ol {
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 0.7em;
 }
-
-h2 {
-    font-size: 2em;
-    margin-top: 40px;
-}
-
-h3 {
-    font-size: 1.5em;
-    margin-top: 30px;
-    border-bottom: none;
-}
-
-p,
-ul {
-    font-size: 1.1em;
-}
-
-ul {
-    list-style-type: disc;
+ul, ol {
     padding-left: 20px;
 }
-
 li {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
-
-code:not(pre > code) {
+code:not(pre > code) { /* Inline code */
     background-color: var(--card-bg);
     color: var(--primary-color);
     padding: 2px 6px;
     border-radius: 4px;
-    font-family: 极 var(--font-code);
+    font-family: var(--font-code);
+    font-size: var(--font-size-code); /* Uniform code font size */
 }
-
+pre { /* Code blocks */
+    margin: 0.8em 0;
+    padding: 10px;
+    background-color: var(--code-bg);
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: var(--font-code); /* Ensure code font family */
+    font-size: var(--font-size-code); /* Uniform code font size */
+}
+/* Styles for tables within explanation sections */
+.explanation table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 0.85em;
+    background-color: var(--code-bg); /* Dark background for tables */
+}
+.explanation th, .explanation td {
+    border: 1px solid var(--border-color);
+    padding: 6px 8px; /* Consistent padding */
+    text-align: left;
+    vertical-align: top;
+}
+.explanation th {
+    background-color: var(--primary-color); /* Header background for table headers */
+    color: white;
+    font-weight: bold;
+}
+.explanation td code { /* Inline code within table cells */
+     background-color: rgba(255,255,255,0.1); /* Lighter than card-bg for contrast */
+     padding: 1px 4px;
+     border-radius: 3px;
+}
+.explanation pre { /* Code blocks within explanations */
+    margin: 0.5em 0;
+    padding: 8px;
+    background-color: rgba(0,0,0,0.2); /* Slightly different background for nested pre */
+    white-space: pre-wrap; /* Wrap long lines in explanation code blocks */
+    word-wrap: break-word;
+}
+.explanation .code-block-within-explanation pre { /* Specific style for code blocks in explanations if needed */
+     background-color: var(--code-bg); /* Keep consistent with other code blocks */
+}
 .run-example-btn {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 7px 12px;
     border-radius: 5px;
     cursor: pointer;
     font-family: var(--font-body);
     font-weight: 500;
     transition: background-color 0.3s;
-    margin-left: 10px;
-    font-size: 0.9em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 0.85em;
 }
-
 .run-example-btn:hover {
-    background-color: #357ABD;
+    background-color: #357ABD; /* Darker shade on hover */
 }
 
-.knowledge-point {
-    margin-bottom: 20px;
-    padding: 15px;
-    border-left: 4px solid var(--primary-color);
-    background-color: rgba(74, 144, 226, 0.1);
-}
-
-.sandbox-container {
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
+/* Interactive Panel Inner Structure */
 .interactive-panel-inner {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    gap: 20px;
+    height: 100%; /* Take full height of parent */
+    width: 100%;  /* Take full width of parent */
+    gap: 15px;    /* Space between sandbox and any other potential elements */
 }
 
+/* Sandbox specific styles */
+.sandbox-container {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    height: 100%; /* Make sandbox container take full available height */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+}
 .sandbox-container h3 {
     margin-top: 0;
     color: var(--primary-color);
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-    flex-shrink: 0;
+    padding-bottom: 8px;
+    font-size: 1.2em;
+    flex-shrink: 0; /* Prevent header from shrinking */
 }
-
 #code-editor {
     width: 100%;
-    flex-grow: 1;
+    flex-grow: 1; /* Allow editor to take available vertical space */
     background-color: var(--code-bg);
     color: var(--text-color);
     border: 1px solid var(--border-color);
     border-radius: 4px;
     font-family: var(--font-code);
-    font-size: 0.9em;
+    font-size: var(--font-size-code); /* Uniform code font size */
     padding: 10px;
     box-sizing: border-box;
-    resize: vertical;
-    min-height: 150px;
+    resize: vertical; /* Allow vertical resize */
+    min-height: 150px; /* Minimum height for the editor */
 }
-
 .sandbox-controls {
     display: flex;
-    justify-content: flex-end;
-    padding: 10px 0;
-    flex-shrink: 0;
+    justify-content: flex-end; /* Align button to the right */
+    padding: 8px 0; /* Padding for controls area */
+    flex-shrink: 0; /* Prevent controls from shrinking */
 }
-
 #run-code-btn {
     background-color: var(--success-color);
     color: white;
@@ -191,130 +203,208 @@ code:not(pre > code) {
     font-weight: bold;
     transition: background-color 0.3s;
 }
-
 #run-code-btn:hover {
-    background-color: #5aa777;
+    background-color: #5aa777; /* Darker green on hover */
 }
-
 #run-code-btn:disabled {
-    background-color: #555;
+    background-color: #555; /* Greyed out when disabled */
     cursor: not-allowed;
 }
-
 #output-area {
-    background-color: #000;
-    color: #fff;
-    padding: 15px;
+    background-color: #000; /* Black background for output */
+    color: #fff; /* White text for output */
+    padding: 10px;
     border-radius: 4px;
     font-family: var(--font-code);
-    white-space: pre-wrap;
+    white-space: pre-wrap; /* Wrap text in output */
     word-wrap: break-word;
-    min-height: 80px;
-    margin-top: 10px;
-    flex-shrink: 0;
-    font-size: 0.85em;
-    overflow-y: auto;
-    max-height: 250px;
+    min-height: 80px; /* Minimum height for output */
+    margin-top: 8px; /* Space above output area */
+    flex-shrink: 0; /* Prevent output area from shrinking excessively */
+    font-family: var(--font-code); /* Ensure code font family */
+    font-size: var(--font-size-code); /* Uniform code font size */
+    overflow-y: auto; /* Scroll if content exceeds max-height */
+    max-height: 250px; /* Max height before scrolling */
 }
 
+/* Quiz Section Styles */
 .quiz-section {
-    margin-top: 50px;
-    background-color: transparent;
-    border: none;
-    padding: 0;
+    margin-top: 20px;
+    background-color: transparent; /* No background for the section itself */
+    border: none; /* No border for the section */
+    padding: 0; /* No padding for the section */
 }
-
 .quiz-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 25px;
-    scroll-margin-top: 20px;
+    padding: 15px;
+    margin-bottom: 15px;
+    scroll-margin-top: 20px; /* For smooth scroll targeting */
 }
-
 .quiz-card h3 {
     margin-top: 0;
     color: var(--header-color);
+    font-size: 1.1em;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
 }
-
 .quiz-options .option {
     display: block;
-    background-color: #3c3c3c;
-    margin: 10px 0;
-    padding: 15px;
+    background-color: #3c3c3c; /* Slightly lighter than card-bg for options */
+    margin: 8px 0;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    border: 2px solid transparent;
+    border: 2px solid transparent; /* For feedback */
     transition: border-color 0.3s, background-color 0.3s;
+    position: relative; /* For feedback icon positioning */
+    font-size: 0.9em;
 }
-
 .quiz-options .option:hover {
-    border-color: var(--primary-color);
+    border-color: var(--primary-color); /* Highlight on hover */
 }
-
 .quiz-options .option.correct {
     border-color: var(--success-color);
-    background-color: rgba(115, 201, 144, 0.2);
+    background-color: rgba(115, 201, 144, 0.15); /* Light green for correct */
 }
-
 .quiz-options .option.incorrect {
     border-color: var(--error-color);
-    background-color: rgba(244, 113, 116, 0.2);
+    background-color: rgba(244, 113, 116, 0.15); /* Light red for incorrect */
 }
-
-.quiz-options .option.answered {
-    cursor: default;
+.quiz-options .option.answered { /* Styles for any answered option */
+    cursor: default; /* No pointer cursor after answering */
 }
-
-.quiz-options .option.answered:hover {
-    border-color: transparent;
+.quiz-options .option.answered:hover { /* Prevent hover effect on answered options unless specified */
+    border-color: currentColor; /* Keep current border color (correct/incorrect) */
 }
-
 .quiz-options .option.correct.answered:hover {
-    border-color: var(--success-color);
+     border-color: var(--success-color); /* Keep success color on hover if correct */
 }
-
-.quiz-options .option.incorrect.answered:hover {
-    border-color: var(--error-color);
+ .quiz-options .option.incorrect.answered:hover {
+     border-color: var(--error-color); /* Keep error color on hover if incorrect */
 }
-
+.feedback-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1em;
+}
 .explanation {
-    display: none;
-    margin-top: 20px;
+    display: none; /* Hidden by default */
+    margin-top: 15px;
     padding: 15px;
-    background-color: var(--code-bg);
+    background-color: rgba(0,0,0,0.1); /* Subtle background for explanation */
     border-radius: 5px;
+    border: 1px solid var(--border-color);
+    line-height: 1.6; /* Improved readability for explanations */
 }
-
 .explanation h4 {
     margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-size: 1.05em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+.explanation ul, .explanation ol {
+    padding-left: 20px; /* Standard padding for lists in explanations */
+    margin-bottom: 10px;
+}
+.explanation ul li::marker { /* Style list markers if needed */
     color: var(--primary-color);
 }
-
-.explanation ul {
-    padding-left: 20px;
-}
-
-.explanation ul li::marker {
-    color: var(--primary-color);
-}
-
 .next-btn-container {
-    text-align: right;
-    margin-top: 20px;
+    text-align: right; /* Align next button to the right */
+    margin-top: 15px;
 }
-
 .next-btn {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 10px 25px;
+    padding: 8px 20px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 0.9em;
+}
+.next-btn:hover {
+    background-color: #357ABD; /* Darker blue on hover */
 }
 
-.next-btn:hover {
-    background-color: #357ABD;
+/* Styles for code preambles if used */
+.preamble-code {
+    background-color: var(--code-bg);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+}
+.preamble-text p {
+    font-style: italic;
+    color: #aaa; /* Lighter text for preamble description */
+    margin-bottom: 10px;
+}
+
+/* Navigation Bar Styles */
+.main-nav {
+    background-color: var(--card-bg);
+    padding: 10px 0;
+    text-align: center;
+    position: fixed; /* Fixed position at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it's above other content */
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto; /* Allow horizontal scrolling for many chapters */
+    white-space: nowrap; /* Prevent chapter links from wrapping */
+}
+.main-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 20px; /* Add some padding on the sides of the list itself */
+    display: inline-block; /* Allows the ul to shrink-to-fit content and be centered */
+}
+.main-nav li {
+    display: inline-block; /* Chapters listed horizontally */
+    margin-right: 15px;
+}
+.main-nav li:last-child {
+    margin-right: 0;
+}
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 500;
+}
+.main-nav a:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+.main-nav a.active {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 700;
+}
+
+/* Adjust .container padding to account for fixed navbar height */
+/* Ensure this value matches the actual height of .main-nav + any top/bottom padding/border */
+.container {
+    /* Estimate navbar height (padding + line-height of text). Adjust if necessary. */
+    /* padding-top: 50px;  This will be dynamically adjusted if main-nav has variable height or use a fixed known value */
+    /* For now, assuming a fixed height for the navbar based on its content. */
+    /* Let's assume the navbar is roughly 40px (padding) + 20px (font) = 60px */
+    padding-top: 60px; /* Adjust this value if the navbar's actual rendered height is different */
+    height: calc(100vh - 60px); /* Adjust height of the container itself */
+}
+
+/* Ensure tutorial-content and interactive-panel also account for navbar */
+.tutorial-content, .interactive-panel {
+    height: calc(100vh - 60px); /* Adjust height for fixed navbar */
 }
