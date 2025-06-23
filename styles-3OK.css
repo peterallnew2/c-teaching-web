@@ -1,0 +1,320 @@
+/* styles.css */
+:root {
+    --primary-color: #4a90e2;
+    --background-color: #1e1e1e;
+    --text-color: #dcdcdc;
+    --header-color: #ffffff;
+    --card-bg: #2d2d2d;
+    --border-color: #444;
+    --code-bg: #282c34;
+    --success-color: #73c990;
+    --error-color: #f47174;
+    --font-body: 'Noto Sans TC', sans-serif;
+    --font-code: 'Source Code Pro', monospace;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    max-width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.tutorial-content {
+    width: 70%;
+    min-width: 350px;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.resizer {
+    width: 8px;
+    cursor: col-resize;
+    background-color: var(--border-color);
+    flex-shrink: 0;
+    transition: background-color 0.2s;
+}
+
+.resizer:hover {
+    background-color: var(--primary-color);
+}
+
+.interactive-panel {
+    width: 30%;
+    min-width: 400px;
+    flex-grow: 1;
+    position: relative;
+    top: 0;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+    color: var(--header-color);
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+    margin-top: 40px;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 30px;
+    border-bottom: none;
+}
+
+p,
+ul {
+    font-size: 1.1em;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+code:not(pre > code) {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 极 var(--font-code);
+}
+
+.run-example-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 500;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+    font-size: 0.9em;
+}
+
+.run-example-btn:hover {
+    background-color: #357ABD;
+}
+
+.knowledge-point {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-left: 4px solid var(--primary-color);
+    background-color: rgba(74, 144, 226, 0.1);
+}
+
+.sandbox-container {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.interactive-panel-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+}
+
+.sandbox-container h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    flex-shrink: 0;
+}
+
+#code-editor {
+    width: 100%;
+    flex-grow: 1;
+    background-color: var(--code-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: var(--font-code);
+    font-size: 0.9em;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 150px;
+}
+
+.sandbox-controls {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    flex-shrink: 0;
+}
+
+#run-code-btn {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#run-code-btn:hover {
+    background-color: #5aa777;
+}
+
+#run-code-btn:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+#output-area {
+    background-color: #000;
+    color: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: var(--font-code);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    min-height: 80px;
+    margin-top: 10px;
+    flex-shrink: 0;
+    font-size: 0.85em;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.quiz-section {
+    margin-top: 50px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.quiz-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+    scroll-margin-top: 20px;
+}
+
+.quiz-card h3 {
+    margin-top: 0;
+    color: var(--header-color);
+}
+
+.quiz-options .option {
+    display: block;
+    background-color: #3c3c3c;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.quiz-options .option:hover {
+    border-color: var(--primary-color);
+}
+
+.quiz-options .option.correct {
+    border-color: var(--success-color);
+    background-color: rgba(115, 201, 144, 0.2);
+}
+
+.quiz-options .option.incorrect {
+    border-color: var(--error-color);
+    background-color: rgba(244, 113, 116, 0.2);
+}
+
+.quiz-options .option.answered {
+    cursor: default;
+}
+
+.quiz-options .option.answered:hover {
+    border-color: transparent;
+}
+
+.quiz-options .option.correct.answered:hover {
+    border-color: var(--success-color);
+}
+
+.quiz-options .option.incorrect.answered:hover {
+    border-color: var(--error-color);
+}
+
+.explanation {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--code-bg);
+    border-radius: 5px;
+}
+
+.explanation h4 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.explanation ul {
+    padding-left: 20px;
+}
+
+.explanation ul li::marker {
+    color: var(--primary-color);
+}
+
+.next-btn-container {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.next-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.next-btn:hover {
+    background-color: #357ABD;
+}
